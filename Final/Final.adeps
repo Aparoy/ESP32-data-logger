@@ -1,0 +1,45 @@
+<!-- Add this file to source control in order to automatically restore library dependencies when opening the project on another machine -->
+<ArduinoDependencyCollection xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <Dependencies>
+    <Dependency>
+      <Type>Platform</Type>
+      <Key>
+        <Packager>esp32</Packager>
+        <Name>esp32</Name>
+        <Version>1.0.6</Version>
+      </Key>
+    </Dependency>
+    <Dependency>
+      <Type>Library</Type>
+      <Key>
+        <Packager>rajat</Packager>
+        <Name>ESP32Time</Name>
+        <Version>0.0.1</Version>
+      </Key>
+    </Dependency>
+    <Dependency>
+      <Type>Library</Type>
+      <Key>
+        <Packager>Me-No-Dev</Packager>
+        <Name>ESP Async WebServer</Name>
+        <Version>1.2.3</Version>
+      </Key>
+    </Dependency>
+    <Dependency>
+      <Type>Library</Type>
+      <Key>
+        <Packager>Me-No-Dev</Packager>
+        <Name>AsyncTCP</Name>
+        <Version>1.1.1</Version>
+      </Key>
+    </Dependency>
+    <Dependency>
+      <Type>Library</Type>
+      <Key>
+        <Packager>Markus Sattler</Packager>
+        <Name>WebSockets</Name>
+        <Version>2.3.7</Version>
+      </Key>
+    </Dependency>
+  </Dependencies>
+</ArduinoDependencyCollection>

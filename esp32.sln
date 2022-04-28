@@ -1,0 +1,77 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.1.32414.318
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{803FD0C6-D64E-4E16-9DC3-1DAEC859A3D2}") = "spiffs", "spiffs\spiffs.vgdbproj", "{70AF6F15-4FEA-47C4-9B86-2BCDD3D02683}"
+EndProject
+Project("{803FD0C6-D64E-4E16-9DC3-1DAEC859A3D2}") = "RTC-internal", "RTC-internal\RTC-internal.vgdbproj", "{13417FFE-3FA1-4F9A-A073-30A07ED98189}"
+EndProject
+Project("{803FD0C6-D64E-4E16-9DC3-1DAEC859A3D2}") = "AsyncWebServer", "AsyncWebServer\AsyncWebServer.vgdbproj", "{91584C40-0310-473F-9625-FA89B1983B26}"
+EndProject
+Project("{803FD0C6-D64E-4E16-9DC3-1DAEC859A3D2}") = "WebSocket", "WebSocket\WebSocket.vgdbproj", "{6087456D-93C0-40B2-8F94-EB82F167622C}"
+EndProject
+Project("{888888A0-9F3D-457C-B088-3A5042F75D52}") = "Helper", "Helper\Helper.pyproj", "{B0B4A2EE-D6A2-4BC8-BEC5-3CAC8F197837}"
+EndProject
+Project("{803FD0C6-D64E-4E16-9DC3-1DAEC859A3D2}") = "Final", "Final\Final.vgdbproj", "{1534EA8A-3163-4431-BA07-5A610C0C3CD3}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Debug|NodeMCU-32S = Debug|NodeMCU-32S
+		Release|Any CPU = Release|Any CPU
+		Release|NodeMCU-32S = Release|NodeMCU-32S
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{70AF6F15-4FEA-47C4-9B86-2BCDD3D02683}.Debug|Any CPU.ActiveCfg = Debug|NodeMCU-32S
+		{70AF6F15-4FEA-47C4-9B86-2BCDD3D02683}.Debug|Any CPU.Build.0 = Debug|NodeMCU-32S
+		{70AF6F15-4FEA-47C4-9B86-2BCDD3D02683}.Debug|NodeMCU-32S.ActiveCfg = Debug|NodeMCU-32S
+		{70AF6F15-4FEA-47C4-9B86-2BCDD3D02683}.Debug|NodeMCU-32S.Build.0 = Debug|NodeMCU-32S
+		{70AF6F15-4FEA-47C4-9B86-2BCDD3D02683}.Release|Any CPU.ActiveCfg = Release|NodeMCU-32S
+		{70AF6F15-4FEA-47C4-9B86-2BCDD3D02683}.Release|Any CPU.Build.0 = Release|NodeMCU-32S
+		{70AF6F15-4FEA-47C4-9B86-2BCDD3D02683}.Release|NodeMCU-32S.ActiveCfg = Release|NodeMCU-32S
+		{70AF6F15-4FEA-47C4-9B86-2BCDD3D02683}.Release|NodeMCU-32S.Build.0 = Release|NodeMCU-32S
+		{13417FFE-3FA1-4F9A-A073-30A07ED98189}.Debug|Any CPU.ActiveCfg = Debug|NodeMCU-32S
+		{13417FFE-3FA1-4F9A-A073-30A07ED98189}.Debug|Any CPU.Build.0 = Debug|NodeMCU-32S
+		{13417FFE-3FA1-4F9A-A073-30A07ED98189}.Debug|NodeMCU-32S.ActiveCfg = Debug|NodeMCU-32S
+		{13417FFE-3FA1-4F9A-A073-30A07ED98189}.Debug|NodeMCU-32S.Build.0 = Debug|NodeMCU-32S
+		{13417FFE-3FA1-4F9A-A073-30A07ED98189}.Release|Any CPU.ActiveCfg = Release|NodeMCU-32S
+		{13417FFE-3FA1-4F9A-A073-30A07ED98189}.Release|Any CPU.Build.0 = Release|NodeMCU-32S
+		{13417FFE-3FA1-4F9A-A073-30A07ED98189}.Release|NodeMCU-32S.ActiveCfg = Release|NodeMCU-32S
+		{13417FFE-3FA1-4F9A-A073-30A07ED98189}.Release|NodeMCU-32S.Build.0 = Release|NodeMCU-32S
+		{91584C40-0310-473F-9625-FA89B1983B26}.Debug|Any CPU.ActiveCfg = Debug|NodeMCU-32S
+		{91584C40-0310-473F-9625-FA89B1983B26}.Debug|Any CPU.Build.0 = Debug|NodeMCU-32S
+		{91584C40-0310-473F-9625-FA89B1983B26}.Debug|NodeMCU-32S.ActiveCfg = Debug|NodeMCU-32S
+		{91584C40-0310-473F-9625-FA89B1983B26}.Debug|NodeMCU-32S.Build.0 = Debug|NodeMCU-32S
+		{91584C40-0310-473F-9625-FA89B1983B26}.Release|Any CPU.ActiveCfg = Release|NodeMCU-32S
+		{91584C40-0310-473F-9625-FA89B1983B26}.Release|Any CPU.Build.0 = Release|NodeMCU-32S
+		{91584C40-0310-473F-9625-FA89B1983B26}.Release|NodeMCU-32S.ActiveCfg = Release|NodeMCU-32S
+		{91584C40-0310-473F-9625-FA89B1983B26}.Release|NodeMCU-32S.Build.0 = Release|NodeMCU-32S
+		{6087456D-93C0-40B2-8F94-EB82F167622C}.Debug|Any CPU.ActiveCfg = Debug|NodeMCU-32S
+		{6087456D-93C0-40B2-8F94-EB82F167622C}.Debug|Any CPU.Build.0 = Debug|NodeMCU-32S
+		{6087456D-93C0-40B2-8F94-EB82F167622C}.Debug|NodeMCU-32S.ActiveCfg = Debug|NodeMCU-32S
+		{6087456D-93C0-40B2-8F94-EB82F167622C}.Debug|NodeMCU-32S.Build.0 = Debug|NodeMCU-32S
+		{6087456D-93C0-40B2-8F94-EB82F167622C}.Release|Any CPU.ActiveCfg = Release|NodeMCU-32S
+		{6087456D-93C0-40B2-8F94-EB82F167622C}.Release|Any CPU.Build.0 = Release|NodeMCU-32S
+		{6087456D-93C0-40B2-8F94-EB82F167622C}.Release|NodeMCU-32S.ActiveCfg = Release|NodeMCU-32S
+		{6087456D-93C0-40B2-8F94-EB82F167622C}.Release|NodeMCU-32S.Build.0 = Release|NodeMCU-32S
+		{B0B4A2EE-D6A2-4BC8-BEC5-3CAC8F197837}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B0B4A2EE-D6A2-4BC8-BEC5-3CAC8F197837}.Debug|NodeMCU-32S.ActiveCfg = Debug|Any CPU
+		{B0B4A2EE-D6A2-4BC8-BEC5-3CAC8F197837}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B0B4A2EE-D6A2-4BC8-BEC5-3CAC8F197837}.Release|NodeMCU-32S.ActiveCfg = Release|Any CPU
+		{1534EA8A-3163-4431-BA07-5A610C0C3CD3}.Debug|Any CPU.ActiveCfg = Debug|NodeMCU-32S
+		{1534EA8A-3163-4431-BA07-5A610C0C3CD3}.Debug|Any CPU.Build.0 = Debug|NodeMCU-32S
+		{1534EA8A-3163-4431-BA07-5A610C0C3CD3}.Debug|NodeMCU-32S.ActiveCfg = Debug|NodeMCU-32S
+		{1534EA8A-3163-4431-BA07-5A610C0C3CD3}.Debug|NodeMCU-32S.Build.0 = Debug|NodeMCU-32S
+		{1534EA8A-3163-4431-BA07-5A610C0C3CD3}.Release|Any CPU.ActiveCfg = Release|NodeMCU-32S
+		{1534EA8A-3163-4431-BA07-5A610C0C3CD3}.Release|Any CPU.Build.0 = Release|NodeMCU-32S
+		{1534EA8A-3163-4431-BA07-5A610C0C3CD3}.Release|NodeMCU-32S.ActiveCfg = Release|NodeMCU-32S
+		{1534EA8A-3163-4431-BA07-5A610C0C3CD3}.Release|NodeMCU-32S.Build.0 = Release|NodeMCU-32S
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {D7F98B31-59AE-4BDC-B6FD-C625D981E368}
+	EndGlobalSection
+EndGlobal

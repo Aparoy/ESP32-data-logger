@@ -1,0 +1,54 @@
+html, body {
+    margin: 0; 
+    height: 100%; 
+    background-color: rgb(15, 237, 196);
+    overflow: hidden
+}
+
+.grid-container{
+    display: grid;
+
+    width:100%;
+    height: 100%;
+
+    grid-template-columns: 10% 90%;
+    grid-auto-rows: 10% 90%;
+
+    grid-gap: 1px;
+}
+
+.grid-item-Logo{
+    background-color:burlywood;
+}
+
+.grid-item-Title{
+    background-color:burlywood;
+}
+
+.grid-item-Menu{
+    background-color:burlywood;
+}
+
+.grid-item-Content{
+    background-color:burlywood;
+    overflow-y: auto;
+}
+
+#show-here{
+    width: 100%;
+    height: 100%; 
+    object-fit: contain;
+}
+
+img {
+    width: 100%;
+    height: 100%; 
+    object-fit: contain;
+}
+
+iframe {
+    display:block;
+    width:100%;
+    height: 100%;
+    object-fit: contain;
+}
