@@ -9,6 +9,7 @@
 #include <Wire.h>
 #include <Adafruit_GFX.h>
 #include <Adafruit_SSD1306.h>
+#include <Adafruit_ADS1X15.h>
 
 #define SCREEN_WIDTH 128 // OLED display width, in pixels
 #define SCREEN_HEIGHT 64 // OLED display height, in pixels
@@ -24,11 +25,15 @@
 static const BaseType_t pro_cpu = 0;
 static const BaseType_t app_cpu = 1;
 
-const char* ssid = "LAPTOP-8JMPRCIB 9360";
+static SemaphoreHandle_t mutex;
+
+const char* ssid = "Rajat's WiFi";
 const char* psk = "AMDR9270X";
 
-const float scaleVal = 0.000805861f;
-const float bias = 0.0f;
+const float scaleVal = 0.000797057f;
+const float bias = 0.157928f;
+
+uint16_t readBuff = 0;
 
 Adafruit_SSD1306 display(SCREEN_WIDTH, SCREEN_HEIGHT, OLED_MOSI, OLED_CLK, OLED_DC, OLED_RESET, OLED_CS);
 String ip_addr_str;
@@ -38,13 +43,15 @@ AsyncWebServer server(80);
 
 void displayTask(void* parameters)
 {
+	float voltage = NULL;
+	
 	while (true)
 	{
 		time_t t = time(NULL);
 		struct tm *t_st;
 		t_st = localtime(&t);
 		
-		float voltage = analogRead(GPIO_NUM_36) * scaleVal + bias;
+		
 		
 		display.clearDisplay();
 		display.setCursor(0, 0);
@@ -56,6 +63,9 @@ void displayTask(void* parameters)
 		display.println(ip_addr_str);
 		
 		display.setTextSize(3);
+		
+		voltage = readBuff * scaleVal + bias;
+		
 		display.printf("%.4fV\n", voltage);
 		display.display();
 		
@@ -67,7 +77,9 @@ void measurementTask(void* parameters)
 {
 	while (true)
 	{
-		delay(10);
+		readBuff = (99 * readBuff + analogRead(GPIO_NUM_36)) / 100;
+		
+		delay(1);
 	}
 }
 
@@ -145,9 +157,10 @@ void setup()
 	ESP32Time.begin();
 	
 	//Create Tasks
+	mutex = xSemaphoreCreateMutex();
 	xTaskCreatePinnedToCore(displayTask, "DisplayTask", 2048, NULL, 1, NULL, app_cpu);
 	xTaskCreatePinnedToCore(logTask, "LoggingTask", 2048, NULL, 1, NULL, app_cpu);
-	xTaskCreatePinnedToCore(measurementTask, "MeasurementTask", 2048, NULL, 2, NULL, app_cpu);
+	xTaskCreatePinnedToCore(measurementTask, "MeasurementTask", 2048, NULL, 1, NULL, app_cpu);
 	
 	//Prime requests
 	server.on("/",
@@ -173,7 +186,7 @@ void setup()
 	server.on("/data.csv",
 		HTTP_GET,
 		[](AsyncWebServerRequest* request) {
-			request->send(SPIFFS, "/index.html", "text/html"); 
+			request->send(SPIFFS, "/data.csv", "text/csv"); 
 		}); 
 	server.onNotFound([](AsyncWebServerRequest* request) {
 		request->send(404, "text/plain", "Not Found");
