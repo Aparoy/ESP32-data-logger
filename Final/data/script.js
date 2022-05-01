@@ -1,5 +1,7 @@
 let content = document.querySelector('#content-area')
 let btnCSV = document.querySelector('#CSV');
+let btnChart = document.querySelector('#Chart');
+let btnJob = document.querySelector('#AddJob');
 
 // socket = new WebSocket()
 
@@ -45,4 +47,18 @@ function readTextFile(file)
     rawFile.send(null);
 }
 
-btnCSV.addEventListener('click',()=>{ readTextFile("data.csv"); })
+function showJobMaker()
+{
+    content.innerHTML = '<iframe src="./jobmaker.html"></iframe>';
+}
+
+function showChart(){
+    //TODO: edit this
+}
+
+
+btnCSV.addEventListener('click',()=>{ readTextFile("data.csv"); });
+
+btnChart.addEventListener('click',()=>{ showChart(); });
+
+btnJob.addEventListener('click',()=>{showJobMaker(); });

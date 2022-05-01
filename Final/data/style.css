@@ -1,7 +1,7 @@
 html, body {
     margin: 0; 
     height: 100%; 
-    background-color: rgb(15, 237, 196);
+    background-color: rgb(172, 172, 172);
     overflow: hidden
 }
 
@@ -44,6 +44,11 @@ img {
     width: 100%;
     height: 100%; 
     object-fit: contain;
+}
+
+button {
+    display: block;
+    width: 100%;
 }
 
 iframe {

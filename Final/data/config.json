@@ -1,0 +1,6 @@
+{
+    "BigTimeInterval" : 60,
+    "SmallTimeInterval" : 60,
+    "SmallCount" : 10,
+    "BigCount" : 15
+}

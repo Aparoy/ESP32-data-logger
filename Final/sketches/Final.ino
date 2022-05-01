@@ -30,8 +30,6 @@ static SemaphoreHandle_t mutex;
 const char* ssid = "Rajat's WiFi";
 const char* psk = "AMDR9270X";
 
-const float scaleVal = 0.000797057f;
-const float bias = 0.157928f;
 
 float readBuff = 0;
 
@@ -77,7 +75,6 @@ void measurementTask(void* parameters)
 	while (true)
 	{
 		readBuff = ads.computeVolts(ads.readADC_SingleEnded(0));
-		
 		delay(1);
 	}
 }
@@ -207,6 +204,12 @@ void setup()
 		[](AsyncWebServerRequest* request) {
 			request->send(SPIFFS, "/data.csv", "text/csv"); 
 		}); 
+	server.on("config.json",
+		HTTP_POST,
+		[](AsyncWebServerRequest* request) {
+			
+			Serial.println("JSON uploaded"); 
+		});
 	server.onNotFound([](AsyncWebServerRequest* request) {
 		request->send(404, "text/plain", "Not Found");
 	}); 
