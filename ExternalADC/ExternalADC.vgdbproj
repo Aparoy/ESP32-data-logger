@@ -1,0 +1,155 @@
+<?xml version="1.0"?>
+<VisualGDBProjectSettings2 xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <Project xsi:type="com.visualgdb.project.external.arduino">
+    <CustomSourceDirectories>
+      <Directories />
+      <PathStyle>Unknown</PathStyle>
+    </CustomSourceDirectories>
+    <AutoProgramSPIFFSPartition>true</AutoProgramSPIFFSPartition>
+    <ProjectModeSettings>
+      <ProjectGUID>89f8fd54-f37c-4f6a-9d36-b23400d5d289</ProjectGUID>
+      <GroupSourcesByTypes>true</GroupSourcesByTypes>
+      <GroupSourcesByPaths>true</GroupSourcesByPaths>
+      <SketchSubdirectory>sketches</SketchSubdirectory>
+      <MainSketchFile>ExternalADC.ino</MainSketchFile>
+      <RootSketchFolder>
+        <Subfolders />
+        <Files>
+          <string>ExternalADC.ino</string>
+        </Files>
+      </RootSketchFolder>
+      <OtherFiles />
+    </ProjectModeSettings>
+  </Project>
+  <Build xsi:type="com.visualgdb.build.external.arduino">
+    <BuildLogMode xsi:nil="true" />
+    <IgnoreNormalLibraryDirectories>false</IgnoreNormalLibraryDirectories>
+    <OutputSubdirectory>Output\$(PlatformName.defuse)\$(ConfigurationName.defuse)</OutputSubdirectory>
+    <EnableVerboseBuild>false</EnableVerboseBuild>
+    <PreprocessorMacros />
+    <AutoBuildSPIFFSPartition>true</AutoBuildSPIFFSPartition>
+  </Build>
+  <CustomBuild>
+    <PreSyncActions />
+    <PreBuildActions />
+    <PostBuildActions />
+    <PreCleanActions />
+    <PostCleanActions />
+  </CustomBuild>
+  <CustomDebug>
+    <PreDebugActions />
+    <PostDebugActions />
+    <DebugStopActions />
+    <BreakMode>Default</BreakMode>
+  </CustomDebug>
+  <CustomShortcuts>
+    <Shortcuts />
+    <ShowMessageAfterExecuting>true</ShowMessageAfterExecuting>
+  </CustomShortcuts>
+  <UserDefinedVariables />
+  <CodeSense>
+    <Enabled>Unknown</Enabled>
+    <ExtraSettings>
+      <HideErrorsInSystemHeaders>true</HideErrorsInSystemHeaders>
+      <SupportLightweightReferenceAnalysis>true</SupportLightweightReferenceAnalysis>
+      <CheckForClangFormatFiles>true</CheckForClangFormatFiles>
+      <FormattingEngine xsi:nil="true" />
+    </ExtraSettings>
+    <CodeAnalyzerSettings>
+      <Enabled>false</Enabled>
+    </CodeAnalyzerSettings>
+  </CodeSense>
+  <Configurations>
+    <VisualGDBConfiguration>
+      <PlatformName>NodeMCU-32S</PlatformName>
+      <DebugSettingsOverride xsi:type="com.visualgdb.debug.embedded">
+        <AdditionalStartupCommands />
+        <AdditionalGDBSettings>
+          <Features>
+            <DisableAutoDetection>false</DisableAutoDetection>
+            <UseFrameParameter>false</UseFrameParameter>
+            <SimpleValuesFlagSupported>false</SimpleValuesFlagSupported>
+            <ListLocalsSupported>false</ListLocalsSupported>
+            <ByteLevelMemoryCommandsAvailable>false</ByteLevelMemoryCommandsAvailable>
+            <ThreadInfoSupported>false</ThreadInfoSupported>
+            <PendingBreakpointsSupported>false</PendingBreakpointsSupported>
+            <SupportTargetCommand>false</SupportTargetCommand>
+            <ReliableBreakpointNotifications>false</ReliableBreakpointNotifications>
+          </Features>
+          <EnableSmartStepping>false</EnableSmartStepping>
+          <FilterSpuriousStoppedNotifications>false</FilterSpuriousStoppedNotifications>
+          <ForceSingleThreadedMode>false</ForceSingleThreadedMode>
+          <UseAppleExtensions>false</UseAppleExtensions>
+          <CanAcceptCommandsWhileRunning>false</CanAcceptCommandsWhileRunning>
+          <MakeLogFile>false</MakeLogFile>
+          <IgnoreModuleEventsWhileStepping>true</IgnoreModuleEventsWhileStepping>
+          <UseRelativePathsOnly>false</UseRelativePathsOnly>
+          <ExitAction>None</ExitAction>
+          <DisableDisassembly>false</DisableDisassembly>
+          <ExamineMemoryWithXCommand>false</ExamineMemoryWithXCommand>
+          <StepIntoNewInstanceEntry>main</StepIntoNewInstanceEntry>
+          <ExamineRegistersInRawFormat>true</ExamineRegistersInRawFormat>
+          <DisableSignals>false</DisableSignals>
+          <EnableAsyncExecutionMode>false</EnableAsyncExecutionMode>
+          <AsyncModeSupportsBreakpoints>true</AsyncModeSupportsBreakpoints>
+          <TemporaryBreakConsolidationTimeout>0</TemporaryBreakConsolidationTimeout>
+          <EnableNonStopMode>false</EnableNonStopMode>
+          <MaxBreakpointLimit>0</MaxBreakpointLimit>
+          <EnableVerboseMode>true</EnableVerboseMode>
+          <EnablePrettyPrinters>false</EnablePrettyPrinters>
+        </AdditionalGDBSettings>
+        <DebugMethod>
+          <ID>gdbstub</ID>
+          <InterfaceID>com.sysprogs.espxx.bootloader</InterfaceID>
+          <InterfaceSerialNumber>0001</InterfaceSerialNumber>
+          <Configuration xsi:type="com.visualgdb.edp.espxx.settings.gdbstub.esp32">
+            <COMPort>COM8</COMPort>
+            <StubBaudRate>74880</StubBaudRate>
+            <BootloaderBaudRate>115200</BootloaderBaudRate>
+            <BootloaderResetDelay>50</BootloaderResetDelay>
+            <BootloaderActivationSequence>!DTR;RTS;SLEEP;DTR;!RTS;SLEEP;!DTR;SLEEP</BootloaderActivationSequence>
+            <ProgramMode>Enabled</ProgramMode>
+            <SuppressResetConfirmation>false</SuppressResetConfirmation>
+            <PatchBootloader>true</PatchBootloader>
+            <FLASHSettings>
+              <Size>size2MB</Size>
+              <Frequency>freq40M</Frequency>
+              <Mode>DIO</Mode>
+            </FLASHSettings>
+          </Configuration>
+        </DebugMethod>
+        <AutoDetectRTOS>true</AutoDetectRTOS>
+        <SemihostingSupport>Auto</SemihostingSupport>
+        <SemihostingPollingDelay>0</SemihostingPollingDelay>
+        <StepIntoEntryPoint>false</StepIntoEntryPoint>
+        <ReloadFirmwareOnReset>false</ReloadFirmwareOnReset>
+        <ValidateEndOfStackAddress>true</ValidateEndOfStackAddress>
+        <StopAtEntryPoint>false</StopAtEntryPoint>
+        <EnableVirtualHalts>false</EnableVirtualHalts>
+        <DynamicAnalysisSettings />
+        <EndOfStackSymbol>_estack</EndOfStackSymbol>
+        <TimestampProviderTicksPerSecond>0</TimestampProviderTicksPerSecond>
+        <KeepConsoleAfterExit>false</KeepConsoleAfterExit>
+        <UnusedStackFillPattern xsi:nil="true" />
+        <CheckInterfaceDrivers>true</CheckInterfaceDrivers>
+      </DebugSettingsOverride>
+      <BuildSettingsExtension xsi:type="com.visualgdb.build.external.arduino.extension">
+        <BoardID>esp32:esp32:nodemcu-32s</BoardID>
+        <COMPort>COM8</COMPort>
+        <Properties>
+          <Entries>
+            <KeyValue>
+              <Key>FlashFreq</Key>
+              <Value>80</Value>
+            </KeyValue>
+            <KeyValue>
+              <Key>UploadSpeed</Key>
+              <Value>921600</Value>
+            </KeyValue>
+          </Entries>
+        </Properties>
+        <DebugUnoptimizedComponentTypes>Sketch</DebugUnoptimizedComponentTypes>
+      </BuildSettingsExtension>
+    </VisualGDBConfiguration>
+  </Configurations>
+</VisualGDBProjectSettings2>

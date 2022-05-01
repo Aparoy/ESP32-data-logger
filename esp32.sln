@@ -15,6 +15,8 @@ Project("{888888A0-9F3D-457C-B088-3A5042F75D52}") = "Helper", "Helper\Helper.pyp
 EndProject
 Project("{803FD0C6-D64E-4E16-9DC3-1DAEC859A3D2}") = "Final", "Final\Final.vgdbproj", "{1534EA8A-3163-4431-BA07-5A610C0C3CD3}"
 EndProject
+Project("{803FD0C6-D64E-4E16-9DC3-1DAEC859A3D2}") = "ExternalADC", "ExternalADC\ExternalADC.vgdbproj", "{89F8FD54-F37C-4F6A-9D36-B23400D5D289}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -67,6 +69,14 @@ Global
 		{1534EA8A-3163-4431-BA07-5A610C0C3CD3}.Release|Any CPU.Build.0 = Release|NodeMCU-32S
 		{1534EA8A-3163-4431-BA07-5A610C0C3CD3}.Release|NodeMCU-32S.ActiveCfg = Release|NodeMCU-32S
 		{1534EA8A-3163-4431-BA07-5A610C0C3CD3}.Release|NodeMCU-32S.Build.0 = Release|NodeMCU-32S
+		{89F8FD54-F37C-4F6A-9D36-B23400D5D289}.Debug|Any CPU.ActiveCfg = Debug|NodeMCU-32S
+		{89F8FD54-F37C-4F6A-9D36-B23400D5D289}.Debug|Any CPU.Build.0 = Debug|NodeMCU-32S
+		{89F8FD54-F37C-4F6A-9D36-B23400D5D289}.Debug|NodeMCU-32S.ActiveCfg = Debug|NodeMCU-32S
+		{89F8FD54-F37C-4F6A-9D36-B23400D5D289}.Debug|NodeMCU-32S.Build.0 = Debug|NodeMCU-32S
+		{89F8FD54-F37C-4F6A-9D36-B23400D5D289}.Release|Any CPU.ActiveCfg = Release|NodeMCU-32S
+		{89F8FD54-F37C-4F6A-9D36-B23400D5D289}.Release|Any CPU.Build.0 = Release|NodeMCU-32S
+		{89F8FD54-F37C-4F6A-9D36-B23400D5D289}.Release|NodeMCU-32S.ActiveCfg = Release|NodeMCU-32S
+		{89F8FD54-F37C-4F6A-9D36-B23400D5D289}.Release|NodeMCU-32S.Build.0 = Release|NodeMCU-32S
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

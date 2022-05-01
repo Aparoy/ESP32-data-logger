@@ -33,9 +33,10 @@ const char* psk = "AMDR9270X";
 const float scaleVal = 0.000797057f;
 const float bias = 0.157928f;
 
-uint16_t readBuff = 0;
+float readBuff = 0;
 
 Adafruit_SSD1306 display(SCREEN_WIDTH, SCREEN_HEIGHT, OLED_MOSI, OLED_CLK, OLED_DC, OLED_RESET, OLED_CS);
+Adafruit_ADS1115 ads;
 String ip_addr_str;
 AsyncWebServer server(80);
 
@@ -64,9 +65,7 @@ void displayTask(void* parameters)
 		
 		display.setTextSize(3);
 		
-		voltage = readBuff * scaleVal + bias;
-		
-		display.printf("%.4fV\n", voltage);
+		display.printf("%.1fmV\n", 1000 * readBuff);
 		display.display();
 		
 		delay(100);
@@ -77,7 +76,7 @@ void measurementTask(void* parameters)
 {
 	while (true)
 	{
-		readBuff = (99 * readBuff + analogRead(GPIO_NUM_36)) / 100;
+		readBuff = ads.computeVolts(ads.readADC_SingleEnded(0));
 		
 		delay(1);
 	}
@@ -99,6 +98,30 @@ void setup()
 	
 	//Begin serial Communication
 	Serial.begin(115200);
+	
+	// The ADC input range (or gain) can be changed via the following
+	// functions, but be careful never to exceed VDD +0.3V max, or to
+	// exceed the upper and lower limits if you adjust the input range!
+	// Setting these values incorrectly may destroy your ADC!
+	//                                                                ADS1015  ADS1115
+	//                                                                -------  -------
+	// ads.setGain(GAIN_TWOTHIRDS);  // 2/3x gain +/- 6.144V  1 bit = 3mV      0.1875mV (default)
+	// ads.setGain(GAIN_ONE);        // 1x gain   +/- 4.096V  1 bit = 2mV      0.125mV
+	// ads.setGain(GAIN_TWO);        // 2x gain   +/- 2.048V  1 bit = 1mV      0.0625mV
+	// ads.setGain(GAIN_FOUR);       // 4x gain   +/- 1.024V  1 bit = 0.5mV    0.03125mV
+	// ads.setGain(GAIN_EIGHT);      // 8x gain   +/- 0.512V  1 bit = 0.25mV   0.015625mV
+	// ads.setGain(GAIN_SIXTEEN);    // 16x gain  +/- 0.256V  1 bit = 0.125mV  0.0078125mV
+	ads.setGain(GAIN_TWO); 
+	
+	if (!ads.begin()) {
+		Serial.println("Failed to initialize ADS.");
+		while (1) ;
+	}
+	
+	if (!ads.begin()) {
+		Serial.println("Failed to initialize ADS.");
+		while (1) ;
+	}
 	
 	// SSD1306_SWITCHCAPVCC = generate display voltage from 3.3V internally
 	if (!display.begin(SSD1306_SWITCHCAPVCC)) {
