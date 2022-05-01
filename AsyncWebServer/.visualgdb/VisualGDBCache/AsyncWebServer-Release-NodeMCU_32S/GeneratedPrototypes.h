@@ -3,12 +3,7 @@
 #include <Arduino.h>
 
 #define SYSPROGS_ARDUINO_EXPAND_GENERATED_PROTOTYPES \
-	void onIndexRequest(AsyncWebServerRequest* request); \
-	void onCSSRequest(AsyncWebServerRequest* request); \
-	void onJSRequest(AsyncWebServerRequest* request); \
-	void onPNGRequest(AsyncWebServerRequest* request); \
-	void onDataRequest(AsyncWebServerRequest* request); \
-	void onPageNotFound(AsyncWebServerRequest* request); \
+	void notFound(AsyncWebServerRequest *request); \
 	void setup(); \
 	void loop(); \
 

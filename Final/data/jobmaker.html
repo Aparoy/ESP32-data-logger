@@ -9,34 +9,35 @@
 </head>
 
 <body>
+  <form name="jobForm">
+    <label for="BigTimeInterval">Big Interval:</label>
 
-  <label for="BigTimeInterval">Big Interval:</label>
+    <select name="BigTimeInterval">
+      <option value="60">60 mins</option>
 
-  <select name="Take values for" id="BigTimeInterval">
-    <option value="1">60 mins</option>
+    </select>
 
-  </select>
+    <label for="BigCount">Big Interval Count:</label>
 
-  <label for="BigCount">Big Interval Count:</label>
+    <select name="BigCount">
+      <option value="15">15 times</option>
 
-  <select name="Take values for" id="BigCount">
-    <option value="15">15 times</option>
+    </select>
 
-  </select>
+    <label for="SmallTimeInterval">Small Interval:</label>
 
-  <label for="SmallTimeInterval">Small Interval:</label>
+    <select name="SmallTimeInterval">
+      <option value="60">60 seconds</option>
 
-  <select name="Take values for" id="SmallTimeInterval">
-    <option value="60">60 seconds</option>
+    </select>
 
-  </select>
+    <label for="SmallCount">Small Interval Count:</label>
 
-  <label for="SmallCount">Small Interval Count:</label>
+    <select name="SmallCount">
+      <option value="10">10 values</option>
 
-  <select name="Take values for" id="SmallCount">
-    <option value="10">10 values</option>
-
-  </select>
+    </select>
+  </form>
   <br>
   <button id="btnSubmit">Submit Job</button>
 

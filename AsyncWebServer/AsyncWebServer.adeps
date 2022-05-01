@@ -13,14 +13,6 @@
       <Type>Library</Type>
       <Key>
         <Packager>Me-No-Dev</Packager>
-        <Name>ESP Async WebServer</Name>
-        <Version>1.2.3</Version>
-      </Key>
-    </Dependency>
-    <Dependency>
-      <Type>Library</Type>
-      <Key>
-        <Packager>Me-No-Dev</Packager>
         <Name>AsyncTCP</Name>
         <Version>1.1.1</Version>
       </Key>
@@ -28,9 +20,9 @@
     <Dependency>
       <Type>Library</Type>
       <Key>
-        <Packager>Markus Sattler</Packager>
-        <Name>WebSockets</Name>
-        <Version>2.3.7</Version>
+        <Packager>Me-No-Dev</Packager>
+        <Name>ESP Async WebServer</Name>
+        <Version>1.2.3</Version>
       </Key>
     </Dependency>
   </Dependencies>

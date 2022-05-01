@@ -1,89 +1,81 @@
+//
+// A simple server implementation showing how to:
+//  * serve static messages
+//  * read GET and POST parameters
+//  * handle missing pages / 404s
+//
+
+#ifdef ESP32
 #include <WiFi.h>
-#include <SPIFFS.h>
+#include <AsyncTCP.h>
+#elif defined(ESP8266)
+#include <ESP8266WiFi.h>
+#include <ESPAsyncTCP.h>
+#endif
 #include <ESPAsyncWebServer.h>
-#include <WebSocketsServer.h>
 
-//constants
-const char* ssid = "LAPTOP-8JMPRCIB 9360";
-const char* psk = "AMDR9270X";
-
-
-//globals
 AsyncWebServer server(80);
 
-//called when request webpage
-void onIndexRequest(AsyncWebServerRequest* request)
-{
-	request->send(SPIFFS, "/index.html", "text/html");
+const char* ssid = "Rajat's WiFi";
+const char* password = "AMDR9270X";
+
+const char* PARAM_MESSAGE = "message";
+
+void notFound(AsyncWebServerRequest *request) {
+	request->send(404, "text/plain", "Not found");
 }
 
-//called when request stylesheet
-void onCSSRequest(AsyncWebServerRequest* request)
-{
-	request->send(SPIFFS, "/style.css", "text/css");
-}
+void setup() {
 
-void onJSRequest(AsyncWebServerRequest* request)
-{
-	request->send(SPIFFS, "/script.js", "text/javascript");
-}
-
-void onPNGRequest(AsyncWebServerRequest* request)
-{
-	request->send(SPIFFS, "/Logo.png", "image/png");
-}
-
-void onDataRequest(AsyncWebServerRequest* request)
-{
-	request->send(SPIFFS, "/data.csv", "text/csv");
-}
-
-//404
-void onPageNotFound(AsyncWebServerRequest* request)
-{
-	request->send(404, "text/plain", "Not Found");
-}
-
-void setup()
-{
-	
-	//Start serial port
 	Serial.begin(115200);
-	
-	//init SPIFFS
-	if (!SPIFFS.begin())
-	{
-		Serial.println("Could not mount SPIFFS");
-		while (true) ;
+	WiFi.mode(WIFI_STA);
+	WiFi.begin(ssid, password);
+	if (WiFi.waitForConnectResult() != WL_CONNECTED) {
+		Serial.printf("WiFi Failed!\n");
+		return;
 	}
-	
-	//Connect to access point
-	Serial.printf("Connecting to %s", ssid);
-	WiFi.begin(ssid, psk);
-	while (WiFi.status() != WL_CONNECTED)
-	{
-		delay(500);
-		Serial.print(".");
-	}
-	
-	//Print our ip
-	Serial.printf("Connected! ip: %s\r\n", WiFi.localIP().toString().c_str());
-	
-	//Prime requests
-	server.on("/", HTTP_GET, onIndexRequest);
-	server.on("/style.css", HTTP_GET, onCSSRequest);
-	server.on("/script.js", HTTP_GET, onJSRequest);
-	server.on("/Logo.png", HTTP_GET, onPNGRequest);
-	server.on("/data.csv", HTTP_GET, onDataRequest);
-	server.onNotFound(onPageNotFound);
-	
-	//Start server
-	server.begin();
 
-	
+	Serial.print("IP Address: ");
+	Serial.println(WiFi.localIP());
+
+	server.on("/",
+		HTTP_GET,
+		[](AsyncWebServerRequest *request) {
+			request->send(200, "text/plain", "Hello, world");
+		});
+
+	// Send a GET request to <IP>/get?message=<message>
+	server.on("/get",
+		HTTP_GET,
+		[](AsyncWebServerRequest *request) {
+			String message;
+			if (request->hasParam(PARAM_MESSAGE)) {
+				message = request->getParam(PARAM_MESSAGE)->value();
+			}
+			else {
+				message = "No message sent";
+			}
+			request->send(200, "text/plain", "Hello, GET: " + message);
+		});
+
+	// Send a POST request to <IP>/post with a form field message set to <message>
+	server.on("/post",
+		HTTP_POST,
+		[](AsyncWebServerRequest *request) {
+			String message;
+			if (request->hasParam(PARAM_MESSAGE, true)) {
+				message = request->getParam(PARAM_MESSAGE, true)->value();
+			}
+			else {
+				message = "No message sent";
+			}
+			request->send(200, "text/plain", "Hello, POST: " + message);
+		});
+
+	server.onNotFound(notFound);
+
+	server.begin();
 }
 
-void loop()
-{
-
+void loop() {
 }

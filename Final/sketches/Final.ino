@@ -2,6 +2,7 @@
 #include <ESP32Time.h>
 #include <SPIFFS.h>
 #include <ESPAsyncWebServer.h>
+#include <ArduinoJson.h>
 #include <WebSocketsServer.h>
 #include <Ticker.h>
 
@@ -204,11 +205,40 @@ void setup()
 		[](AsyncWebServerRequest* request) {
 			request->send(SPIFFS, "/data.csv", "text/csv"); 
 		}); 
-	server.on("config.json",
-		HTTP_POST,
+	server.on("/jobmaker.html",
+		HTTP_GET,
 		[](AsyncWebServerRequest* request) {
+			request->send(SPIFFS, "/jobmaker.html", "text/html"); 
+		}); 
+	server.on("/jobsubmitter.js",
+		HTTP_GET,
+		[](AsyncWebServerRequest* request) {
+			request->send(SPIFFS, "/jobsubmitter.js", "text/javascript");
+		});
+	server.on("/config.json",
+		HTTP_GET,
+		[](AsyncWebServerRequest* request) {
+			request->send(SPIFFS, "/config.json", "text/json"); 
+		}); 
+	server.on("/post",
+		HTTP_POST, 
+		[](AsyncWebServerRequest *request)
+		{
 			
-			Serial.println("JSON uploaded"); 
+		},
+		[](AsyncWebServerRequest *request, const String& filename, size_t index, uint8_t *data, size_t len, bool final)
+		{
+			
+		},
+		[](AsyncWebServerRequest *request, uint8_t *data, size_t len, size_t index, size_t total)
+		{
+			Serial.println(String("data=") + (char*)data);
+
+			DynamicJsonDocument doc(1024);
+			deserializeJson(doc, data);
+
+			Serial.println((const char*)doc["BigTimeInterval"]);
+
 		});
 	server.onNotFound([](AsyncWebServerRequest* request) {
 		request->send(404, "text/plain", "Not Found");
