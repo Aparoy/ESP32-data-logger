@@ -27,9 +27,13 @@ static const BaseType_t pro_cpu = 0;
 static const BaseType_t app_cpu = 1;
 
 static SemaphoreHandle_t mutex;
+DynamicJsonDocument doc(1024);
+
+char jobData[200];
 
 const char* ssid = "Rajat's WiFi";
 const char* psk = "AMDR9270X";
+String messageDisplay;
 
 
 float readBuff = 0;
@@ -59,8 +63,8 @@ void displayTask(void* parameters)
 		display.printf("%02d-%02d-%04d  %02d:%02d:%02d\n", t_st->tm_mday, 1 + t_st->tm_mon, 1900 + t_st->tm_year, t_st->tm_hour, t_st->tm_min, t_st->tm_sec);
 		
 		display.setTextSize(2);
-		display.print("IPV4:");
-		display.println(ip_addr_str);
+		display.println(messageDisplay);
+		
 		
 		display.setTextSize(3);
 		
@@ -82,10 +86,32 @@ void measurementTask(void* parameters)
 
 void logTask(void* parameters)
 {
+	
 	while (true)
 	{
 		delay(60000);
 	}
+}
+
+bool startJob()
+{
+	File file = SPIFFS.open("/config.json", FILE_READ);
+	
+	if (!file) {
+		Serial.println("Error opening config file for reading");
+		file.close();
+		return false;
+	}else
+	{
+		//xTaskCreatePinnedToCore(logTask, "LoggingTask", 2048, NULL, 1, NULL, app_cpu);
+		while (file.available())
+		{
+			Serial.write(file.read());
+		}
+		file.close();
+		return true;
+	}
+	
 }
 
 
@@ -140,6 +166,7 @@ void setup()
 		while (true) ; //TODO: sleep
 	}
 	
+	
 	//Connect to access point
 	Serial.printf("Connecting to %s", ssid);
 	display.setCursor(0, 0);
@@ -169,6 +196,8 @@ void setup()
 	display.printf("Connected!\n");
 	display.println(ip_addr_str);
 	display.display();
+	messageDisplay = "IPV4:" + ip_addr_str;
+
 	
 	//Set Time
 	ESP32Time.begin();
@@ -176,13 +205,14 @@ void setup()
 	//Create Tasks
 	mutex = xSemaphoreCreateMutex();
 	xTaskCreatePinnedToCore(displayTask, "DisplayTask", 2048, NULL, 1, NULL, app_cpu);
-	xTaskCreatePinnedToCore(logTask, "LoggingTask", 2048, NULL, 1, NULL, app_cpu);
 	xTaskCreatePinnedToCore(measurementTask, "MeasurementTask", 2048, NULL, 1, NULL, app_cpu);
+	
 	
 	//Prime requests
 	server.on("/",
 		HTTP_GET,
 		[](AsyncWebServerRequest* request) {
+			messageDisplay = "HTTP Request";
 			request->send(SPIFFS, "/index.html", "text/html"); 
 		});
 	server.on("/style.css",
@@ -222,22 +252,43 @@ void setup()
 		}); 
 	server.on("/post",
 		HTTP_POST, 
+		//Callback on POST request
 		[](AsyncWebServerRequest *request)
 		{
 			
 		},
+		//Callback on POST download
 		[](AsyncWebServerRequest *request, const String& filename, size_t index, uint8_t *data, size_t len, bool final)
 		{
 			
 		},
+		//Callback on download complete
 		[](AsyncWebServerRequest *request, uint8_t *data, size_t len, size_t index, size_t total)
 		{
-			Serial.println(String("data=") + (char*)data);
-
-			DynamicJsonDocument doc(1024);
 			deserializeJson(doc, data);
-
-			Serial.println((const char*)doc["BigTimeInterval"]);
+			
+			serializeJsonPretty(doc, jobData);
+			
+			SPIFFS.remove("/config.json");
+			
+			File file = SPIFFS.open("/config.json", FILE_WRITE);
+	
+			if (!file) {
+				Serial.println("Error opening config file for writing");
+			}else
+			{
+				if (!file.print(jobData))
+				{
+					Serial.println("Could not write config file");
+					file.close();
+				}else
+				{
+					file.close();
+					startJob();
+				}
+			}
+			
+			request->send(200, "text/plain", "OK");
 
 		});
 	server.onNotFound([](AsyncWebServerRequest* request) {
@@ -246,6 +297,8 @@ void setup()
 	
 	//Start server
 	server.begin();
+	
+	startJob();
 }
 
 void loop()

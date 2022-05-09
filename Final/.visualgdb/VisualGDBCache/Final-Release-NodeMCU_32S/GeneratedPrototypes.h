@@ -6,6 +6,7 @@
 	void displayTask(void* parameters); \
 	void measurementTask(void* parameters); \
 	void logTask(void* parameters); \
+	bool startJob(); \
 	void setup(); \
 	void loop(); \
 

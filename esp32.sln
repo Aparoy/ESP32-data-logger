@@ -17,6 +17,10 @@ Project("{803FD0C6-D64E-4E16-9DC3-1DAEC859A3D2}") = "Final", "Final\Final.vgdbpr
 EndProject
 Project("{803FD0C6-D64E-4E16-9DC3-1DAEC859A3D2}") = "ExternalADC", "ExternalADC\ExternalADC.vgdbproj", "{89F8FD54-F37C-4F6A-9D36-B23400D5D289}"
 EndProject
+Project("{803FD0C6-D64E-4E16-9DC3-1DAEC859A3D2}") = "SWTimer", "SWTimer\SWTimer.vgdbproj", "{B63EE246-4603-4E29-A2BD-DFFEEA7C9974}"
+EndProject
+Project("{803FD0C6-D64E-4E16-9DC3-1DAEC859A3D2}") = "HInturrupts", "HInturrupts\HInturrupts.vgdbproj", "{575B88C7-AEEA-4438-AFA1-83BBA87617B1}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -77,6 +81,22 @@ Global
 		{89F8FD54-F37C-4F6A-9D36-B23400D5D289}.Release|Any CPU.Build.0 = Release|NodeMCU-32S
 		{89F8FD54-F37C-4F6A-9D36-B23400D5D289}.Release|NodeMCU-32S.ActiveCfg = Release|NodeMCU-32S
 		{89F8FD54-F37C-4F6A-9D36-B23400D5D289}.Release|NodeMCU-32S.Build.0 = Release|NodeMCU-32S
+		{B63EE246-4603-4E29-A2BD-DFFEEA7C9974}.Debug|Any CPU.ActiveCfg = Debug|NodeMCU-32S
+		{B63EE246-4603-4E29-A2BD-DFFEEA7C9974}.Debug|Any CPU.Build.0 = Debug|NodeMCU-32S
+		{B63EE246-4603-4E29-A2BD-DFFEEA7C9974}.Debug|NodeMCU-32S.ActiveCfg = Debug|NodeMCU-32S
+		{B63EE246-4603-4E29-A2BD-DFFEEA7C9974}.Debug|NodeMCU-32S.Build.0 = Debug|NodeMCU-32S
+		{B63EE246-4603-4E29-A2BD-DFFEEA7C9974}.Release|Any CPU.ActiveCfg = Release|NodeMCU-32S
+		{B63EE246-4603-4E29-A2BD-DFFEEA7C9974}.Release|Any CPU.Build.0 = Release|NodeMCU-32S
+		{B63EE246-4603-4E29-A2BD-DFFEEA7C9974}.Release|NodeMCU-32S.ActiveCfg = Release|NodeMCU-32S
+		{B63EE246-4603-4E29-A2BD-DFFEEA7C9974}.Release|NodeMCU-32S.Build.0 = Release|NodeMCU-32S
+		{575B88C7-AEEA-4438-AFA1-83BBA87617B1}.Debug|Any CPU.ActiveCfg = Debug|NodeMCU-32S
+		{575B88C7-AEEA-4438-AFA1-83BBA87617B1}.Debug|Any CPU.Build.0 = Debug|NodeMCU-32S
+		{575B88C7-AEEA-4438-AFA1-83BBA87617B1}.Debug|NodeMCU-32S.ActiveCfg = Debug|NodeMCU-32S
+		{575B88C7-AEEA-4438-AFA1-83BBA87617B1}.Debug|NodeMCU-32S.Build.0 = Debug|NodeMCU-32S
+		{575B88C7-AEEA-4438-AFA1-83BBA87617B1}.Release|Any CPU.ActiveCfg = Release|NodeMCU-32S
+		{575B88C7-AEEA-4438-AFA1-83BBA87617B1}.Release|Any CPU.Build.0 = Release|NodeMCU-32S
+		{575B88C7-AEEA-4438-AFA1-83BBA87617B1}.Release|NodeMCU-32S.ActiveCfg = Release|NodeMCU-32S
+		{575B88C7-AEEA-4438-AFA1-83BBA87617B1}.Release|NodeMCU-32S.Build.0 = Release|NodeMCU-32S
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
