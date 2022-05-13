@@ -117,19 +117,26 @@ void measurementTask(void* parameters)
 
 void logTask(void* parameters)
 {
-	
-	File dataFile = SPIFFS.open("/data.csv", FILE_APPEND);
-	for (int i = 0; i < 10; i++)
+	int i = 0;
+	while (i<10)
 	{
-		time_t t = time(NULL);
-		struct tm *t_st;
-		t_st = localtime(&t);
-		dataFile.printf("%02d-%02d-%04d,%02d:%02d:%02d,%.1f\n", t_st->tm_mday, 1 + t_st->tm_mon, 1900 + t_st->tm_year, t_st->tm_hour, t_st->tm_min, t_st->tm_sec, readBuff * 1000.0f);
-		
+		if (xSemaphoreTake(mutex, portMAX_DELAY)==pdTRUE)
+		{
+			File dataFile = SPIFFS.open("/data.csv", FILE_APPEND);
+			time_t t = time(NULL);
+			struct tm *t_st;
+			t_st = localtime(&t);
+			dataFile.printf("%02d-%02d-%04d,%02d:%02d:%02d,%.1f\n", t_st->tm_mday, 1 + t_st->tm_mon, 1900 + t_st->tm_year, t_st->tm_hour, t_st->tm_min, t_st->tm_sec, readBuff * 1000.0f);
+			dataFile.close();
+			xSemaphoreGive(mutex);
+			i++;
+		}
+		else
+		{
+			continue;
+		}
 		delay(1000);
 	}
-		
-	dataFile.close();
 	
 	vTaskDelete(NULL);
 }
@@ -162,7 +169,6 @@ bool startJob()
 			xTimerReset(auto_reload_timer, portMAX_DELAY);
 		}
 		
-		//xTaskCreatePinnedToCore(logTask, "LoggingTask", 2048, NULL, 1, NULL, app_cpu);
 		while (file.available())
 		{
 			Serial.write(file.read());
@@ -270,7 +276,16 @@ void setup()
 	server.on("/data.csv",
 		HTTP_GET,
 		[](AsyncWebServerRequest* request) {
-			request->send(SPIFFS, "/data.csv", "text/csv"); 
+			if (xSemaphoreTake(mutex, portMAX_DELAY)==pdTRUE)
+			{
+				request->send(SPIFFS, "/data.csv", "text/csv"); 
+				xSemaphoreGive(mutex);
+			}
+			else
+			{
+				
+			}
+			
 		}); 
 	server.on("/jobmaker.html",
 		HTTP_GET,
