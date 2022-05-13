@@ -3,4 +3,8 @@
 #include <Arduino.h>
 
 #define SYSPROGS_ARDUINO_EXPAND_GENERATED_PROTOTYPES \
+	void handleEvent(uint8_t num, uint8_t* msg); \
+	void onWebsocketEvent(uint8_t num, WStype_t type, uint8_t* payload, size_t length); \
+	void setup(); \
+	void loop(); \
 

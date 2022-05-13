@@ -12,14 +12,6 @@
     <Dependency>
       <Type>Library</Type>
       <Key>
-        <Packager>rajat</Packager>
-        <Name>ESP32Time</Name>
-        <Version>0.0.1</Version>
-      </Key>
-    </Dependency>
-    <Dependency>
-      <Type>Library</Type>
-      <Key>
         <Packager>Me-No-Dev</Packager>
         <Name>ESP Async WebServer</Name>
         <Version>1.2.3</Version>
@@ -39,14 +31,6 @@
         <Packager>Benoit Blanchon &lt;blog.benoitblanchon.fr&gt;</Packager>
         <Name>ArduinoJson</Name>
         <Version>6.19.4</Version>
-      </Key>
-    </Dependency>
-    <Dependency>
-      <Type>Library</Type>
-      <Key>
-        <Packager>Markus Sattler</Packager>
-        <Name>WebSockets</Name>
-        <Version>2.3.7</Version>
       </Key>
     </Dependency>
   </Dependencies>

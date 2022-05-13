@@ -2,6 +2,7 @@ let content = document.querySelector('#content-area')
 let btnCSV = document.querySelector('#CSV');
 let btnChart = document.querySelector('#Chart');
 let btnJob = document.querySelector('#AddJob');
+let btnDownload = document.querySelector('#download');
 
 // socket = new WebSocket()
 
@@ -15,6 +16,7 @@ document.addEventListener('readystatechange', event => {
 
 
 function showTable(text){
+    console.log(text);
     var rows = text.split(/\r?\n/);
     var table = "<table><tr> <th>Date</th> <th>Time</th> <th>Value</th> </tr>";
     for (var i=0; i< rows.length; i++) {
@@ -62,3 +64,7 @@ btnCSV.addEventListener('click',()=>{ readTextFile("data.csv"); });
 btnChart.addEventListener('click',()=>{ showChart(); });
 
 btnJob.addEventListener('click',()=>{showJobMaker(); });
+
+btnDownload.addEventListener('click', ()=>{
+    location = "./data.csv";
+})

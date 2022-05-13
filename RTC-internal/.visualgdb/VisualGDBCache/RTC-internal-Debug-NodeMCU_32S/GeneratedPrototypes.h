@@ -3,4 +3,6 @@
 #include <Arduino.h>
 
 #define SYSPROGS_ARDUINO_EXPAND_GENERATED_PROTOTYPES \
+	void setup(); \
+	void loop(); \
 

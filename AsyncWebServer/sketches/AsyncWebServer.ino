@@ -1,33 +1,26 @@
-//
-// A simple server implementation showing how to:
-//  * serve static messages
-//  * read GET and POST parameters
-//  * handle missing pages / 404s
-//
-
-#ifdef ESP32
 #include <WiFi.h>
+#include <SPIFFS.h>
 #include <AsyncTCP.h>
-#elif defined(ESP8266)
-#include <ESP8266WiFi.h>
-#include <ESPAsyncTCP.h>
-#endif
 #include <ESPAsyncWebServer.h>
 
 AsyncWebServer server(80);
 
-const char* ssid = "Rajat's WiFi";
-const char* password = "AMDR9270X";
+const char* ssid = "DRTARUN 0186";
+const char* password = "U66[27q3";
 
 const char* PARAM_MESSAGE = "message";
-
-void notFound(AsyncWebServerRequest *request) {
-	request->send(404, "text/plain", "Not found");
-}
 
 void setup() {
 
 	Serial.begin(115200);
+	
+	//init SPIFFS
+	if (!SPIFFS.begin())
+	{
+		Serial.println("Could not mount SPIFFS");
+		while (true) ; //TODO: sleep
+	}
+	
 	WiFi.mode(WIFI_STA);
 	WiFi.begin(ssid, password);
 	if (WiFi.waitForConnectResult() != WL_CONNECTED) {
@@ -41,38 +34,20 @@ void setup() {
 	server.on("/",
 		HTTP_GET,
 		[](AsyncWebServerRequest *request) {
-			request->send(200, "text/plain", "Hello, world");
+			request->send(SPIFFS, "/index.html", "text/html"); 
 		});
-
-	// Send a GET request to <IP>/get?message=<message>
-	server.on("/get",
+	
+	server.on("/style.css",
 		HTTP_GET,
 		[](AsyncWebServerRequest *request) {
-			String message;
-			if (request->hasParam(PARAM_MESSAGE)) {
-				message = request->getParam(PARAM_MESSAGE)->value();
-			}
-			else {
-				message = "No message sent";
-			}
-			request->send(200, "text/plain", "Hello, GET: " + message);
+			request->send(SPIFFS, "/style.css", "text/css"); 
 		});
+	
 
-	// Send a POST request to <IP>/post with a form field message set to <message>
-	server.on("/post",
-		HTTP_POST,
-		[](AsyncWebServerRequest *request) {
-			String message;
-			if (request->hasParam(PARAM_MESSAGE, true)) {
-				message = request->getParam(PARAM_MESSAGE, true)->value();
-			}
-			else {
-				message = "No message sent";
-			}
-			request->send(200, "text/plain", "Hello, POST: " + message);
-		});
-
-	server.onNotFound(notFound);
+	server.onNotFound([](AsyncWebServerRequest *reqhandler){
+		//function body
+		reqhandler->send(404, "text/plain", "not found");
+	});
 
 	server.begin();
 }

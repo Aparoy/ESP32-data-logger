@@ -47,6 +47,7 @@
     <ShowMessageAfterExecuting>true</ShowMessageAfterExecuting>
   </CustomShortcuts>
   <UserDefinedVariables />
+  <ImportedPropertySheets />
   <CodeSense>
     <Enabled>Unknown</Enabled>
     <ExtraSettings>
@@ -135,7 +136,7 @@
       </DebugSettingsOverride>
       <BuildSettingsExtension xsi:type="com.visualgdb.build.external.arduino.extension">
         <BoardID>esp32:esp32:nodemcu-32s</BoardID>
-        <COMPort>COM8</COMPort>
+        <COMPort>COM3</COMPort>
         <Properties>
           <Entries>
             <KeyValue>
@@ -152,4 +153,5 @@
       </BuildSettingsExtension>
     </VisualGDBConfiguration>
   </Configurations>
+  <ProgramArgumentsSuggestions />
 </VisualGDBProjectSettings2>

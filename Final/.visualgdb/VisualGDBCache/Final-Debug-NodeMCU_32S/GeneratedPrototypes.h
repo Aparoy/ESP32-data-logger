@@ -3,4 +3,11 @@
 #include <Arduino.h>
 
 #define SYSPROGS_ARDUINO_EXPAND_GENERATED_PROTOTYPES \
+	void displayTask(void* parameters); \
+	void measurementTask(void* parameters); \
+	void logTask(void* parameters); \
+	void myTimerCallback(TimerHandle_t xTimer); \
+	bool startJob(); \
+	void setup(); \
+	void loop(); \
 

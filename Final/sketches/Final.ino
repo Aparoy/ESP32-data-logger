@@ -3,8 +3,8 @@
 #include <SPIFFS.h>
 #include <ESPAsyncWebServer.h>
 #include <ArduinoJson.h>
-#include <WebSocketsServer.h>
-#include <Ticker.h>
+//#include <WebSocketsServer.h>
+//#include <Ticker.h>
 
 #include <SPI.h>
 #include <Wire.h>
@@ -27,12 +27,14 @@ static const BaseType_t pro_cpu = 0;
 static const BaseType_t app_cpu = 1;
 
 static SemaphoreHandle_t mutex;
+
+static TimerHandle_t auto_reload_timer = NULL;
 DynamicJsonDocument doc(1024);
 
 char jobData[200];
 
-const char* ssid = "Rajat's WiFi";
-const char* psk = "AMDR9270X";
+const char* ssid = "DRTARUN 0186";
+const char* psk = "U66[27q3";
 String messageDisplay;
 
 
@@ -79,7 +81,7 @@ void measurementTask(void* parameters)
 {
 	while (true)
 	{
-		readBuff = ads.computeVolts(ads.readADC_SingleEnded(0));
+		readBuff = ads.computeVolts(ads.readADC_SingleEnded(1));
 		delay(1);
 	}
 }
@@ -93,6 +95,31 @@ void logTask(void* parameters)
 	}
 }
 
+void myTimerCallback(TimerHandle_t xTimer)
+{
+	
+	if ((uint32_t)pvTimerGetTimerID(xTimer) == 1)
+	{
+		
+		for (int i = 0; i < 10; i++)
+		{
+			if (File dataFile = SPIFFS.open("/data.csv", FILE_APPEND))
+			{
+				time_t t = time(NULL);
+				struct tm *t_st;
+				t_st = localtime(&t);
+				dataFile.printf("%02d-%02d-%04d,%02d:%02d:%02d,%.1f\n", t_st->tm_mday, 1 + t_st->tm_mon, 1900 + t_st->tm_year, t_st->tm_hour, t_st->tm_min, t_st->tm_sec, readBuff * 1000.0f);
+				dataFile.close();
+			}else
+			{
+				Serial.println("Cannot open data.csv");
+			}
+			
+			delay(1000);
+		}
+	}
+}
+
 bool startJob()
 {
 	File file = SPIFFS.open("/config.json", FILE_READ);
@@ -103,6 +130,16 @@ bool startJob()
 		return false;
 	}else
 	{
+		auto_reload_timer = xTimerCreate("Auto-reload timer", 60000 / portTICK_PERIOD_MS, pdTRUE, (void*)1, myTimerCallback);
+		if (auto_reload_timer == NULL)
+		{
+			Serial.println("Could not create timer");
+		}
+		else
+		{
+			xTimerReset(auto_reload_timer, portMAX_DELAY);
+		}
+		
 		//xTaskCreatePinnedToCore(logTask, "LoggingTask", 2048, NULL, 1, NULL, app_cpu);
 		while (file.available())
 		{
@@ -149,8 +186,7 @@ void setup()
 		while (true) ; // TODO: sleep
 	}
 	
-	display.display();
-	delay(1000);
+	
 	display.clearDisplay();
 	display.setTextSize(2); // Draw 2X-scale text
 	display.setTextColor(SSD1306_WHITE);
@@ -173,6 +209,7 @@ void setup()
 	display.printf("Connecting\n%s", ssid);
 	display.display();
 	WiFi.begin(ssid, psk);
+	delay(1000);
 	while (WiFi.status() != WL_CONNECTED)
 	{
 		digitalWrite(LED_BUILTIN, HIGH);
@@ -257,7 +294,7 @@ void setup()
 		{
 			
 		},
-		//Callback on POST download
+		//Callback on POST download begin
 		[](AsyncWebServerRequest *request, const String& filename, size_t index, uint8_t *data, size_t len, bool final)
 		{
 			
@@ -270,8 +307,11 @@ void setup()
 			serializeJsonPretty(doc, jobData);
 			
 			SPIFFS.remove("/config.json");
+			SPIFFS.remove("/data.csv");
 			
 			File file = SPIFFS.open("/config.json", FILE_WRITE);
+			File dataFile = SPIFFS.open("/data.csv", FILE_WRITE);
+			dataFile.close();
 	
 			if (!file) {
 				Serial.println("Error opening config file for writing");
