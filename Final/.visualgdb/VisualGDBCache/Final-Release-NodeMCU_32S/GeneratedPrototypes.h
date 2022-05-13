@@ -3,9 +3,13 @@
 #include <Arduino.h>
 
 #define SYSPROGS_ARDUINO_EXPAND_GENERATED_PROTOTYPES \
+	void WiFiStationConnected(system_event_id_t event, system_event_info_t info); \
+	void WiFiGotIP(system_event_id_t event, system_event_info_t info); \
+	void WiFiStationDisconnected(system_event_id_t event, system_event_info_t info); \
 	void displayTask(void* parameters); \
 	void measurementTask(void* parameters); \
 	void logTask(void* parameters); \
+	void myTimerCallback(TimerHandle_t xTimer); \
 	bool startJob(); \
 	void setup(); \
 	void loop(); \

@@ -45,7 +45,36 @@ Adafruit_ADS1115 ads;
 String ip_addr_str;
 AsyncWebServer server(80);
 
+void WiFiStationConnected(WiFiEvent_t event, WiFiEventInfo_t info) {
+	Serial.println("Connected to AP successfully!");
+	messageDisplay = "Connected";
+}
 
+void WiFiGotIP(WiFiEvent_t event, WiFiEventInfo_t info) {
+	Serial.println("WiFi connected");
+	Serial.println("IP address: ");
+	Serial.println(WiFi.localIP());
+	ip_addr_str = WiFi.localIP().toString();
+	messageDisplay = "IPV4:" + ip_addr_str;
+	
+	//Set Time
+	delay(1000);
+	ESP32Time.begin();
+}
+
+void WiFiStationDisconnected(WiFiEvent_t event, WiFiEventInfo_t info) {
+	messageDisplay = "Disconnected\nReconnecting...";
+	Serial.println("Disconnected from WiFi access point");
+	Serial.print("WiFi lost connection. Reason: ");
+	Serial.println(info.disconnected.reason);
+	Serial.println("Trying to Reconnect");
+	
+	WiFi.disconnect(true);
+
+	delay(20000);
+	
+	WiFi.begin(ssid, psk);
+}
 
 void displayTask(void* parameters)
 {
@@ -89,34 +118,27 @@ void measurementTask(void* parameters)
 void logTask(void* parameters)
 {
 	
-	while (true)
+	File dataFile = SPIFFS.open("/data.csv", FILE_APPEND);
+	for (int i = 0; i < 10; i++)
 	{
-		delay(60000);
+		time_t t = time(NULL);
+		struct tm *t_st;
+		t_st = localtime(&t);
+		dataFile.printf("%02d-%02d-%04d,%02d:%02d:%02d,%.1f\n", t_st->tm_mday, 1 + t_st->tm_mon, 1900 + t_st->tm_year, t_st->tm_hour, t_st->tm_min, t_st->tm_sec, readBuff * 1000.0f);
+		
+		delay(1000);
 	}
+		
+	dataFile.close();
+	
+	vTaskDelete(NULL);
 }
 
 void myTimerCallback(TimerHandle_t xTimer)
 {
-	
 	if ((uint32_t)pvTimerGetTimerID(xTimer) == 1)
 	{
-		
-		for (int i = 0; i < 10; i++)
-		{
-			if (File dataFile = SPIFFS.open("/data.csv", FILE_APPEND))
-			{
-				time_t t = time(NULL);
-				struct tm *t_st;
-				t_st = localtime(&t);
-				dataFile.printf("%02d-%02d-%04d,%02d:%02d:%02d,%.1f\n", t_st->tm_mday, 1 + t_st->tm_mon, 1900 + t_st->tm_year, t_st->tm_hour, t_st->tm_min, t_st->tm_sec, readBuff * 1000.0f);
-				dataFile.close();
-			}else
-			{
-				Serial.println("Cannot open data.csv");
-			}
-			
-			delay(1000);
-		}
+		xTaskCreatePinnedToCore(logTask, "LogTask", 2048 * 4, NULL, 2, NULL, app_cpu);
 	}
 }
 
@@ -204,44 +226,22 @@ void setup()
 	
 	
 	//Connect to access point
-	Serial.printf("Connecting to %s", ssid);
-	display.setCursor(0, 0);
-	display.printf("Connecting\n%s", ssid);
-	display.display();
-	WiFi.begin(ssid, psk);
-	delay(1000);
-	while (WiFi.status() != WL_CONNECTED)
-	{
-		digitalWrite(LED_BUILTIN, HIGH);
-		Serial.print(".");
-		display.print(".");
-		display.display();
-		delay(500);
-		digitalWrite(LED_BUILTIN, LOW);
-		Serial.print(".");
-		display.print(".");
-		display.display();
-		delay(500);
-	}
-	
-	//Print our ip
-	ip_addr_str = WiFi.localIP().toString();
-	display.clearDisplay();
-	Serial.printf("Connected! ip: ");
-	Serial.println(ip_addr_str);
-	display.setCursor(0, 0);
-	display.printf("Connected!\n");
-	display.println(ip_addr_str);
-	display.display();
-	messageDisplay = "IPV4:" + ip_addr_str;
+	WiFi.disconnect(true);
 
+	delay(1000);
 	
-	//Set Time
-	ESP32Time.begin();
+	WiFi.onEvent(WiFiStationConnected, SYSTEM_EVENT_STA_CONNECTED);
+	WiFi.onEvent(WiFiGotIP, SYSTEM_EVENT_STA_GOT_IP);
+	WiFi.onEvent(WiFiStationDisconnected, SYSTEM_EVENT_STA_DISCONNECTED);
+	
+	WiFi.begin(ssid, psk);
+	
+	
+	
 	
 	//Create Tasks
 	mutex = xSemaphoreCreateMutex();
-	xTaskCreatePinnedToCore(displayTask, "DisplayTask", 2048, NULL, 1, NULL, app_cpu);
+	xTaskCreatePinnedToCore(displayTask, "DisplayTask", 2048 * 2, NULL, 1, NULL, app_cpu);
 	xTaskCreatePinnedToCore(measurementTask, "MeasurementTask", 2048, NULL, 1, NULL, app_cpu);
 	
 	

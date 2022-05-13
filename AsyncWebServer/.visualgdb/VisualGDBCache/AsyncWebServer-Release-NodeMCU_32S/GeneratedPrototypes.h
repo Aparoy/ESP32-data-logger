@@ -3,7 +3,6 @@
 #include <Arduino.h>
 
 #define SYSPROGS_ARDUINO_EXPAND_GENERATED_PROTOTYPES \
-	void notFound(AsyncWebServerRequest *request); \
 	void setup(); \
 	void loop(); \
 

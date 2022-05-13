@@ -1,3 +1,3 @@
 #pragma once
-#include "C:/Users/rajat/Desktop/Arduino/esp32/spiffs/.visualgdb/VisualGDBCache/spiffs-Release-NodeMCU_32S/GeneratedPrototypes.h"
+#include "C:/Users/pc/Desktop/data-logger-projects/ESP32-data-logger/spiffs/.visualgdb/VisualGDBCache/spiffs-Release-NodeMCU_32S/GeneratedPrototypes.h"
 
