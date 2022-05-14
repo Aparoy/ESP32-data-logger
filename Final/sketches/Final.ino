@@ -113,7 +113,7 @@ void measurementTask(void* parameters)
 	{
 		Serial.println("[Measurement] loop");
 		readBuff = ads.computeVolts(ads.readADC_SingleEnded(1));
-		delay(20);
+		delay(50);
 	}
 }
 
