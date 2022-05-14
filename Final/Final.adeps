@@ -12,6 +12,14 @@
     <Dependency>
       <Type>Library</Type>
       <Key>
+        <Packager>rajat</Packager>
+        <Name>ESP32Time</Name>
+        <Version>0.0.1</Version>
+      </Key>
+    </Dependency>
+    <Dependency>
+      <Type>Library</Type>
+      <Key>
         <Packager>Me-No-Dev</Packager>
         <Name>ESP Async WebServer</Name>
         <Version>1.2.3</Version>

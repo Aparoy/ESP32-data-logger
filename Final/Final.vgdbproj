@@ -136,7 +136,7 @@
       </DebugSettingsOverride>
       <BuildSettingsExtension xsi:type="com.visualgdb.build.external.arduino.extension">
         <BoardID>esp32:esp32:nodemcu-32s</BoardID>
-        <COMPort>COM3</COMPort>
+        <COMPort>COM8</COMPort>
         <Properties>
           <Entries>
             <KeyValue>

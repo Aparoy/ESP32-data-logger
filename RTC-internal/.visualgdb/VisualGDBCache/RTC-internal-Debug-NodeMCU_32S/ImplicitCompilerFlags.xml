@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <ImplicitFlagCache xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-  <GCC>C:\Users\pc\Documents\ArduinoData\packages\esp32\tools\xtensa-esp32-elf-gcc\1.22.0-97-gc752ad5-5.2.0/bin/xtensa-esp32-elf-gcc</GCC>
-  <GXX>C:\Users\pc\Documents\ArduinoData\packages\esp32\tools\xtensa-esp32-elf-gcc\1.22.0-97-gc752ad5-5.2.0/bin/xtensa-esp32-elf-g++</GXX>
+  <GCC>C:\Users\rajat\Documents\ArduinoData\packages\esp32\tools\xtensa-esp32-elf-gcc\1.22.0-97-gc752ad5-5.2.0/bin/xtensa-esp32-elf-gcc</GCC>
+  <GXX>C:\Users\rajat\Documents\ArduinoData\packages\esp32\tools\xtensa-esp32-elf-gcc\1.22.0-97-gc752ad5-5.2.0/bin/xtensa-esp32-elf-g++</GXX>
   <CachedFlags>
     <Entry>
       <Key>
@@ -10,20 +10,20 @@
       </Key>
       <Specs>
         <RawIncludeDirs>
-          <string>c:\users\pc\documents\arduinodata\packages\esp32\tools\xtensa-esp32-elf-gcc\1.22.0-97-gc752ad5-5.2.0\bin\../lib/gcc/xtensa-esp32-elf/5.2.0/../../../../xtensa-esp32-elf/include/c++/5.2.0</string>
-          <string>c:\users\pc\documents\arduinodata\packages\esp32\tools\xtensa-esp32-elf-gcc\1.22.0-97-gc752ad5-5.2.0\bin\../lib/gcc/xtensa-esp32-elf/5.2.0/../../../../xtensa-esp32-elf/include/c++/5.2.0/xtensa-esp32-elf</string>
-          <string>c:\users\pc\documents\arduinodata\packages\esp32\tools\xtensa-esp32-elf-gcc\1.22.0-97-gc752ad5-5.2.0\bin\../lib/gcc/xtensa-esp32-elf/5.2.0/../../../../xtensa-esp32-elf/include/c++/5.2.0/backward</string>
-          <string>c:\users\pc\documents\arduinodata\packages\esp32\tools\xtensa-esp32-elf-gcc\1.22.0-97-gc752ad5-5.2.0\bin\../lib/gcc/xtensa-esp32-elf/5.2.0/include</string>
-          <string>c:\users\pc\documents\arduinodata\packages\esp32\tools\xtensa-esp32-elf-gcc\1.22.0-97-gc752ad5-5.2.0\bin\../lib/gcc/xtensa-esp32-elf/5.2.0/include-fixed</string>
-          <string>c:\users\pc\documents\arduinodata\packages\esp32\tools\xtensa-esp32-elf-gcc\1.22.0-97-gc752ad5-5.2.0\bin\../lib/gcc/xtensa-esp32-elf/5.2.0/../../../../xtensa-esp32-elf/include</string>
-          <string>c:\users\pc\documents\arduinodata\packages\esp32\tools\xtensa-esp32-elf-gcc\1.22.0-97-gc752ad5-5.2.0\bin\../xtensa-esp32-elf/sysroot/usr/include</string>
+          <string>c:\users\rajat\documents\arduinodata\packages\esp32\tools\xtensa-esp32-elf-gcc\1.22.0-97-gc752ad5-5.2.0\bin\../lib/gcc/xtensa-esp32-elf/5.2.0/../../../../xtensa-esp32-elf/include/c++/5.2.0</string>
+          <string>c:\users\rajat\documents\arduinodata\packages\esp32\tools\xtensa-esp32-elf-gcc\1.22.0-97-gc752ad5-5.2.0\bin\../lib/gcc/xtensa-esp32-elf/5.2.0/../../../../xtensa-esp32-elf/include/c++/5.2.0/xtensa-esp32-elf</string>
+          <string>c:\users\rajat\documents\arduinodata\packages\esp32\tools\xtensa-esp32-elf-gcc\1.22.0-97-gc752ad5-5.2.0\bin\../lib/gcc/xtensa-esp32-elf/5.2.0/../../../../xtensa-esp32-elf/include/c++/5.2.0/backward</string>
+          <string>c:\users\rajat\documents\arduinodata\packages\esp32\tools\xtensa-esp32-elf-gcc\1.22.0-97-gc752ad5-5.2.0\bin\../lib/gcc/xtensa-esp32-elf/5.2.0/include</string>
+          <string>c:\users\rajat\documents\arduinodata\packages\esp32\tools\xtensa-esp32-elf-gcc\1.22.0-97-gc752ad5-5.2.0\bin\../lib/gcc/xtensa-esp32-elf/5.2.0/include-fixed</string>
+          <string>c:\users\rajat\documents\arduinodata\packages\esp32\tools\xtensa-esp32-elf-gcc\1.22.0-97-gc752ad5-5.2.0\bin\../lib/gcc/xtensa-esp32-elf/5.2.0/../../../../xtensa-esp32-elf/include</string>
+          <string>c:\users\rajat\documents\arduinodata\packages\esp32\tools\xtensa-esp32-elf-gcc\1.22.0-97-gc752ad5-5.2.0\bin\../xtensa-esp32-elf/sysroot/usr/include</string>
         </RawIncludeDirs>
         <RawLibraryPaths>
-          <string>c:/users/pc/documents/arduinodata/packages/esp32/tools/xtensa-esp32-elf-gcc/1.22.0-97-gc752ad5-5.2.0/bin/../lib/gcc/xtensa-esp32-elf/5.2.0/</string>
-          <string>c:/users/pc/documents/arduinodata/packages/esp32/tools/xtensa-esp32-elf-gcc/1.22.0-97-gc752ad5-5.2.0/bin/../lib/gcc/</string>
-          <string>c:/users/pc/documents/arduinodata/packages/esp32/tools/xtensa-esp32-elf-gcc/1.22.0-97-gc752ad5-5.2.0/bin/../lib/gcc/xtensa-esp32-elf/5.2.0/../../../../xtensa-esp32-elf/lib/</string>
-          <string>c:/users/pc/documents/arduinodata/packages/esp32/tools/xtensa-esp32-elf-gcc/1.22.0-97-gc752ad5-5.2.0/bin/../xtensa-esp32-elf/sysroot/lib/</string>
-          <string>c:/users/pc/documents/arduinodata/packages/esp32/tools/xtensa-esp32-elf-gcc/1.22.0-97-gc752ad5-5.2.0/bin/../xtensa-esp32-elf/sysroot/usr/lib/</string>
+          <string>c:/users/rajat/documents/arduinodata/packages/esp32/tools/xtensa-esp32-elf-gcc/1.22.0-97-gc752ad5-5.2.0/bin/../lib/gcc/xtensa-esp32-elf/5.2.0/</string>
+          <string>c:/users/rajat/documents/arduinodata/packages/esp32/tools/xtensa-esp32-elf-gcc/1.22.0-97-gc752ad5-5.2.0/bin/../lib/gcc/</string>
+          <string>c:/users/rajat/documents/arduinodata/packages/esp32/tools/xtensa-esp32-elf-gcc/1.22.0-97-gc752ad5-5.2.0/bin/../lib/gcc/xtensa-esp32-elf/5.2.0/../../../../xtensa-esp32-elf/lib/</string>
+          <string>c:/users/rajat/documents/arduinodata/packages/esp32/tools/xtensa-esp32-elf-gcc/1.22.0-97-gc752ad5-5.2.0/bin/../xtensa-esp32-elf/sysroot/lib/</string>
+          <string>c:/users/rajat/documents/arduinodata/packages/esp32/tools/xtensa-esp32-elf-gcc/1.22.0-97-gc752ad5-5.2.0/bin/../xtensa-esp32-elf/sysroot/usr/lib/</string>
         </RawLibraryPaths>
         <ForcedIncludeFiles />
         <PreprocessorMacros>
@@ -977,17 +977,17 @@
       </Key>
       <Specs>
         <RawIncludeDirs>
-          <string>c:\users\pc\documents\arduinodata\packages\esp32\tools\xtensa-esp32-elf-gcc\1.22.0-97-gc752ad5-5.2.0\bin\../lib/gcc/xtensa-esp32-elf/5.2.0/include</string>
-          <string>c:\users\pc\documents\arduinodata\packages\esp32\tools\xtensa-esp32-elf-gcc\1.22.0-97-gc752ad5-5.2.0\bin\../lib/gcc/xtensa-esp32-elf/5.2.0/include-fixed</string>
-          <string>c:\users\pc\documents\arduinodata\packages\esp32\tools\xtensa-esp32-elf-gcc\1.22.0-97-gc752ad5-5.2.0\bin\../lib/gcc/xtensa-esp32-elf/5.2.0/../../../../xtensa-esp32-elf/include</string>
-          <string>c:\users\pc\documents\arduinodata\packages\esp32\tools\xtensa-esp32-elf-gcc\1.22.0-97-gc752ad5-5.2.0\bin\../xtensa-esp32-elf/sysroot/usr/include</string>
+          <string>c:\users\rajat\documents\arduinodata\packages\esp32\tools\xtensa-esp32-elf-gcc\1.22.0-97-gc752ad5-5.2.0\bin\../lib/gcc/xtensa-esp32-elf/5.2.0/include</string>
+          <string>c:\users\rajat\documents\arduinodata\packages\esp32\tools\xtensa-esp32-elf-gcc\1.22.0-97-gc752ad5-5.2.0\bin\../lib/gcc/xtensa-esp32-elf/5.2.0/include-fixed</string>
+          <string>c:\users\rajat\documents\arduinodata\packages\esp32\tools\xtensa-esp32-elf-gcc\1.22.0-97-gc752ad5-5.2.0\bin\../lib/gcc/xtensa-esp32-elf/5.2.0/../../../../xtensa-esp32-elf/include</string>
+          <string>c:\users\rajat\documents\arduinodata\packages\esp32\tools\xtensa-esp32-elf-gcc\1.22.0-97-gc752ad5-5.2.0\bin\../xtensa-esp32-elf/sysroot/usr/include</string>
         </RawIncludeDirs>
         <RawLibraryPaths>
-          <string>c:/users/pc/documents/arduinodata/packages/esp32/tools/xtensa-esp32-elf-gcc/1.22.0-97-gc752ad5-5.2.0/bin/../lib/gcc/xtensa-esp32-elf/5.2.0/</string>
-          <string>c:/users/pc/documents/arduinodata/packages/esp32/tools/xtensa-esp32-elf-gcc/1.22.0-97-gc752ad5-5.2.0/bin/../lib/gcc/</string>
-          <string>c:/users/pc/documents/arduinodata/packages/esp32/tools/xtensa-esp32-elf-gcc/1.22.0-97-gc752ad5-5.2.0/bin/../lib/gcc/xtensa-esp32-elf/5.2.0/../../../../xtensa-esp32-elf/lib/</string>
-          <string>c:/users/pc/documents/arduinodata/packages/esp32/tools/xtensa-esp32-elf-gcc/1.22.0-97-gc752ad5-5.2.0/bin/../xtensa-esp32-elf/sysroot/lib/</string>
-          <string>c:/users/pc/documents/arduinodata/packages/esp32/tools/xtensa-esp32-elf-gcc/1.22.0-97-gc752ad5-5.2.0/bin/../xtensa-esp32-elf/sysroot/usr/lib/</string>
+          <string>c:/users/rajat/documents/arduinodata/packages/esp32/tools/xtensa-esp32-elf-gcc/1.22.0-97-gc752ad5-5.2.0/bin/../lib/gcc/xtensa-esp32-elf/5.2.0/</string>
+          <string>c:/users/rajat/documents/arduinodata/packages/esp32/tools/xtensa-esp32-elf-gcc/1.22.0-97-gc752ad5-5.2.0/bin/../lib/gcc/</string>
+          <string>c:/users/rajat/documents/arduinodata/packages/esp32/tools/xtensa-esp32-elf-gcc/1.22.0-97-gc752ad5-5.2.0/bin/../lib/gcc/xtensa-esp32-elf/5.2.0/../../../../xtensa-esp32-elf/lib/</string>
+          <string>c:/users/rajat/documents/arduinodata/packages/esp32/tools/xtensa-esp32-elf-gcc/1.22.0-97-gc752ad5-5.2.0/bin/../xtensa-esp32-elf/sysroot/lib/</string>
+          <string>c:/users/rajat/documents/arduinodata/packages/esp32/tools/xtensa-esp32-elf-gcc/1.22.0-97-gc752ad5-5.2.0/bin/../xtensa-esp32-elf/sysroot/usr/lib/</string>
         </RawLibraryPaths>
         <ForcedIncludeFiles />
         <PreprocessorMacros>

@@ -33,8 +33,8 @@ DynamicJsonDocument doc(1024);
 
 char jobData[200];
 
-const char* ssid = "DRTARUN 0186";
-const char* psk = "U66[27q3";
+const char* ssid = "Rajat's WiFi";
+const char* psk = "AMDR9270X";
 String messageDisplay;
 
 
@@ -82,6 +82,7 @@ void displayTask(void* parameters)
 	
 	while (true)
 	{
+		Serial.println("[Display] loop");
 		time_t t = time(NULL);
 		struct tm *t_st;
 		t_st = localtime(&t);
@@ -110,34 +111,40 @@ void measurementTask(void* parameters)
 {
 	while (true)
 	{
+		Serial.println("[Measurement] loop");
 		readBuff = ads.computeVolts(ads.readADC_SingleEnded(1));
-		delay(1);
+		delay(20);
 	}
 }
 
 void logTask(void* parameters)
 {
+	Serial.println("[LogTask] entering task");
 	int i = 0;
 	while (i<10)
 	{
 		if (xSemaphoreTake(mutex, portMAX_DELAY)==pdTRUE)
 		{
+			Serial.println("[LogTask] mutex lock obtained");
 			File dataFile = SPIFFS.open("/data.csv", FILE_APPEND);
 			time_t t = time(NULL);
 			struct tm *t_st;
 			t_st = localtime(&t);
+			Serial.println("[LogTask] writing SPIFFS");
 			dataFile.printf("%02d-%02d-%04d,%02d:%02d:%02d,%.1f\n", t_st->tm_mday, 1 + t_st->tm_mon, 1900 + t_st->tm_year, t_st->tm_hour, t_st->tm_min, t_st->tm_sec, readBuff * 1000.0f);
 			dataFile.close();
+			Serial.println("[LogTask] writing SPIFFS complete");
 			xSemaphoreGive(mutex);
 			i++;
 		}
 		else
 		{
+			Serial.println("[LogTask] mutex lock not obtained");
 			continue;
 		}
 		delay(1000);
 	}
-	
+	Serial.println("[LogTask] deleting task");
 	vTaskDelete(NULL);
 }
 
@@ -145,27 +152,32 @@ void myTimerCallback(TimerHandle_t xTimer)
 {
 	if ((uint32_t)pvTimerGetTimerID(xTimer) == 1)
 	{
+		Serial.println("[TimerCallback] assigning task");
 		xTaskCreatePinnedToCore(logTask, "LogTask", 2048 * 4, NULL, 2, NULL, app_cpu);
 	}
 }
 
 bool startJob()
 {
+	Serial.println("[StartJob] reading config.json");
 	File file = SPIFFS.open("/config.json", FILE_READ);
 	
 	if (!file) {
-		Serial.println("Error opening config file for reading");
+		Serial.println("[StartJob] Error opening config file for reading");
 		file.close();
+		Serial.println("[StartJob] exiting");
 		return false;
 	}else
 	{
+		Serial.println("[StartJob] creating Timer");
 		auto_reload_timer = xTimerCreate("Auto-reload timer", 60000 / portTICK_PERIOD_MS, pdTRUE, (void*)1, myTimerCallback);
 		if (auto_reload_timer == NULL)
 		{
-			Serial.println("Could not create timer");
+			Serial.println("[StartJob] Could not create timer");
 		}
 		else
 		{
+			Serial.println("[StartJob] starting Timer");
 			xTimerReset(auto_reload_timer, portMAX_DELAY);
 		}
 		
@@ -174,6 +186,7 @@ bool startJob()
 			Serial.write(file.read());
 		}
 		file.close();
+		Serial.println("[StartJob] exiting");
 		return true;
 	}
 	
@@ -203,14 +216,14 @@ void setup()
 	ads.setGain(GAIN_TWO); 
 	
 	if (!ads.begin()) {
-		Serial.println("Failed to initialize ADS.");
+		Serial.println("[Main] Failed to initialize ADS.");
 		while (true) ; //TODO: sleep
 	}
 	
 	
 	// SSD1306_SWITCHCAPVCC = generate display voltage from 3.3V internally
 	if (!display.begin(SSD1306_SWITCHCAPVCC)) {
-		Serial.println(F("SSD1306 allocation failed"));
+		Serial.println(F("[Main] SSD1306 allocation failed"));
 		while (true) ; // TODO: sleep
 	}
 	
@@ -223,7 +236,7 @@ void setup()
 	//init SPIFFS
 	if (!SPIFFS.begin())
 	{
-		Serial.println("Could not mount SPIFFS");
+		Serial.println("[Main] Could not mount SPIFFS");
 		display.setCursor(0, 0);
 		display.println("SPIFFS\nFAIL");
 		display.display();
@@ -247,6 +260,7 @@ void setup()
 	
 	//Create Tasks
 	mutex = xSemaphoreCreateMutex();
+	Serial.println("[Main] Assigning tasks");
 	xTaskCreatePinnedToCore(displayTask, "DisplayTask", 2048 * 2, NULL, 1, NULL, app_cpu);
 	xTaskCreatePinnedToCore(measurementTask, "MeasurementTask", 2048, NULL, 1, NULL, app_cpu);
 	
@@ -256,36 +270,47 @@ void setup()
 		HTTP_GET,
 		[](AsyncWebServerRequest* request) {
 			messageDisplay = "HTTP Request";
+			Serial.println("[Main] index req");
 			request->send(SPIFFS, "/index.html", "text/html"); 
+			Serial.println("[Main] index req complete");
 		});
 	server.on("/style.css",
 		HTTP_GET,
 		[](AsyncWebServerRequest* request) {
+			Serial.println("[Main] css req");
 			request->send(SPIFFS, "/style.css", "text/css");
+			Serial.println("[Main] css req complete");
 		});
 	server.on("/script.js",
 		HTTP_GET,
 		[](AsyncWebServerRequest* request) {
+			Serial.println("[Main] js req");
 			request->send(SPIFFS, "/script.js", "text/javascript");
+			Serial.println("[Main] js req complete");
 		});
 	server.on("/Logo.png",
 		HTTP_GET,
 		[](AsyncWebServerRequest* request) {
+			Serial.println("[Main] png req");
 			request->send(SPIFFS, "/Logo.png", "image/png");
+			Serial.println("[Main] png req complete");
 		}); 
 	server.on("/data.csv",
 		HTTP_GET,
 		[](AsyncWebServerRequest* request) {
+			Serial.println("[Main] csv req");
 			if (xSemaphoreTake(mutex, portMAX_DELAY)==pdTRUE)
 			{
+				Serial.println("[Main] csv mutex obtained");
 				request->send(SPIFFS, "/data.csv", "text/csv"); 
 				xSemaphoreGive(mutex);
+				Serial.println("[Main] csv sent");
 			}
 			else
 			{
-				
+				Serial.println("[Main] csv mutex not obtained");
 			}
-			
+			Serial.println("[Main] csv req complete");
 		}); 
 	server.on("/jobmaker.html",
 		HTTP_GET,
@@ -358,5 +383,5 @@ void setup()
 
 void loop()
 {
-	
+	delay(1000);
 }
