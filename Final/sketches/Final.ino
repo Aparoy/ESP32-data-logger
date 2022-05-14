@@ -33,10 +33,9 @@ DynamicJsonDocument doc(1024);
 
 char jobData[200];
 
-const char* ssid = "Rajat's WiFi";
-const char* psk = "AMDR9270X";
+const char* ssid = "DRTARUN 0186";
+const char* psk = "U66[27q3";
 String messageDisplay;
-
 
 float readBuff = 0;
 
@@ -46,13 +45,13 @@ String ip_addr_str;
 AsyncWebServer server(80);
 
 void WiFiStationConnected(WiFiEvent_t event, WiFiEventInfo_t info) {
-	Serial.println("Connected to AP successfully!");
+	Serial.println("[WiFi] Connected to AP successfully!");
 	messageDisplay = "Connected";
 }
 
 void WiFiGotIP(WiFiEvent_t event, WiFiEventInfo_t info) {
-	Serial.println("WiFi connected");
-	Serial.println("IP address: ");
+	Serial.println("[WiFi] WiFi connected");
+	Serial.println("[WiFi] IP address: ");
 	Serial.println(WiFi.localIP());
 	ip_addr_str = WiFi.localIP().toString();
 	messageDisplay = "IPV4:" + ip_addr_str;
@@ -63,11 +62,11 @@ void WiFiGotIP(WiFiEvent_t event, WiFiEventInfo_t info) {
 }
 
 void WiFiStationDisconnected(WiFiEvent_t event, WiFiEventInfo_t info) {
-	messageDisplay = "Disconnected\nReconnecting...";
-	Serial.println("Disconnected from WiFi access point");
-	Serial.print("WiFi lost connection. Reason: ");
+	messageDisplay = "Disconnect\nReconnect";
+	Serial.println("[WiFi] Disconnected from WiFi access point");
+	Serial.print("[WiFi] WiFi lost connection. Reason: ");
 	Serial.println(info.disconnected.reason);
-	Serial.println("Trying to Reconnect");
+	Serial.println("[WiFi] Trying to Reconnect");
 	
 	WiFi.disconnect(true);
 
@@ -82,7 +81,7 @@ void displayTask(void* parameters)
 	
 	while (true)
 	{
-		Serial.println("[Display] loop");
+		//Serial.println("[Display] loop");
 		time_t t = time(NULL);
 		struct tm *t_st;
 		t_st = localtime(&t);
@@ -111,7 +110,7 @@ void measurementTask(void* parameters)
 {
 	while (true)
 	{
-		Serial.println("[Measurement] loop");
+		//Serial.println("[Measurement] loop");
 		readBuff = ads.computeVolts(ads.readADC_SingleEnded(1));
 		delay(50);
 	}
@@ -270,47 +269,47 @@ void setup()
 		HTTP_GET,
 		[](AsyncWebServerRequest* request) {
 			messageDisplay = "HTTP Request";
-			Serial.println("[Main] index req");
+			Serial.println("[Server] index req");
 			request->send(SPIFFS, "/index.html", "text/html"); 
-			Serial.println("[Main] index req complete");
+			Serial.println("[Server] index req complete");
 		});
 	server.on("/style.css",
 		HTTP_GET,
 		[](AsyncWebServerRequest* request) {
-			Serial.println("[Main] css req");
+			Serial.println("[Server] css req");
 			request->send(SPIFFS, "/style.css", "text/css");
-			Serial.println("[Main] css req complete");
+			Serial.println("[Server] css req complete");
 		});
 	server.on("/script.js",
 		HTTP_GET,
 		[](AsyncWebServerRequest* request) {
-			Serial.println("[Main] js req");
+			Serial.println("[Server] js req");
 			request->send(SPIFFS, "/script.js", "text/javascript");
-			Serial.println("[Main] js req complete");
+			Serial.println("[Server] js req complete");
 		});
 	server.on("/Logo.png",
 		HTTP_GET,
 		[](AsyncWebServerRequest* request) {
-			Serial.println("[Main] png req");
+			Serial.println("[Server] png req");
 			request->send(SPIFFS, "/Logo.png", "image/png");
-			Serial.println("[Main] png req complete");
+			Serial.println("[Server] png req complete");
 		}); 
 	server.on("/data.csv",
 		HTTP_GET,
 		[](AsyncWebServerRequest* request) {
-			Serial.println("[Main] csv req");
+			Serial.println("[Server] csv req");
 			if (xSemaphoreTake(mutex, portMAX_DELAY)==pdTRUE)
 			{
-				Serial.println("[Main] csv mutex obtained");
+				Serial.println("[Server] csv mutex obtained");
 				request->send(SPIFFS, "/data.csv", "text/csv"); 
 				xSemaphoreGive(mutex);
-				Serial.println("[Main] csv sent");
+				Serial.println("[Server] csv sent");
 			}
 			else
 			{
-				Serial.println("[Main] csv mutex not obtained");
+				Serial.println("[Server] csv mutex not obtained");
 			}
-			Serial.println("[Main] csv req complete");
+			Serial.println("[Server] csv req complete");
 		}); 
 	server.on("/jobmaker.html",
 		HTTP_GET,
@@ -354,12 +353,12 @@ void setup()
 			dataFile.close();
 	
 			if (!file) {
-				Serial.println("Error opening config file for writing");
+				Serial.println("[Server] Error opening config file for writing");
 			}else
 			{
 				if (!file.print(jobData))
 				{
-					Serial.println("Could not write config file");
+					Serial.println("[Server] Could not write config file");
 					file.close();
 				}else
 				{
