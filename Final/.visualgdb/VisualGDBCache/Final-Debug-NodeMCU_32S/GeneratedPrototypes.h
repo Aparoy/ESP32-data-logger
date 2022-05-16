@@ -11,7 +11,6 @@
 	void logTask(void* parameters); \
 	void myTimerCallback(TimerHandle_t xTimer); \
 	bool startJob(); \
-	void listDir(fs::FS &fs, const char * dirname, uint8_t levels); \
 	void setup(); \
 	void loop(); \
 
