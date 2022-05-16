@@ -1,6 +1,8 @@
 #include <WiFi.h>
 #include <ESP32Time.h>
 #include <SPIFFS.h>
+#include "FS.h"
+#include "SD.h"
 #include <ESPAsyncWebServer.h>
 #include <ArduinoJson.h>
 //#include <WebSocketsServer.h>
@@ -22,6 +24,13 @@
 #define OLED_CS    5
 #define OLED_RESET 17
 
+// Declaration for SD card module connected using software SPI (default case):
+#define SD_MOSI   13
+#define SD_CLK   14
+#define SD_MISO    27
+#define SD_CS    15
+
+
 //Constants
 static const BaseType_t pro_cpu = 0;
 static const BaseType_t app_cpu = 1;
@@ -40,6 +49,7 @@ String messageDisplay;
 float readBuff = 0;
 
 Adafruit_SSD1306 display(SCREEN_WIDTH, SCREEN_HEIGHT, OLED_MOSI, OLED_CLK, OLED_DC, OLED_RESET, OLED_CS);
+SPIClass spi = SPIClass(HSPI);
 Adafruit_ADS1115 ads;
 String ip_addr_str;
 AsyncWebServer server(80);
@@ -120,19 +130,19 @@ void logTask(void* parameters)
 {
 	Serial.println("[LogTask] entering task");
 	int i = 0;
-	while (i<10)
+	while (i < 10)
 	{
-		if (xSemaphoreTake(mutex, portMAX_DELAY)==pdTRUE)
+		if (xSemaphoreTake(mutex, portMAX_DELAY) == pdTRUE)
 		{
 			Serial.println("[LogTask] mutex lock obtained");
-			File dataFile = SPIFFS.open("/data.csv", FILE_APPEND);
+			File dataFile = SD.open("/data.csv", FILE_APPEND);
 			time_t t = time(NULL);
 			struct tm *t_st;
 			t_st = localtime(&t);
-			Serial.println("[LogTask] writing SPIFFS");
+			Serial.println("[LogTask] writing SD");
 			dataFile.printf("%02d-%02d-%04d,%02d:%02d:%02d,%.1f\n", t_st->tm_mday, 1 + t_st->tm_mon, 1900 + t_st->tm_year, t_st->tm_hour, t_st->tm_min, t_st->tm_sec, readBuff * 1000.0f);
 			dataFile.close();
-			Serial.println("[LogTask] writing SPIFFS complete");
+			Serial.println("[LogTask] writing SD complete");
 			xSemaphoreGive(mutex);
 			i++;
 		}
@@ -166,8 +176,15 @@ bool startJob()
 		file.close();
 		Serial.println("[StartJob] exiting");
 		return false;
-	}else
+	}
+	else
 	{
+		if (auto_reload_timer != NULL)
+		{
+			Serial.println("[StartJob] deleting previous Timer");
+			xTimerDelete(auto_reload_timer, 0);
+		}
+		
 		Serial.println("[StartJob] creating Timer");
 		auto_reload_timer = xTimerCreate("Auto-reload timer", 60000 / portTICK_PERIOD_MS, pdTRUE, (void*)1, myTimerCallback);
 		if (auto_reload_timer == NULL)
@@ -191,6 +208,37 @@ bool startJob()
 	
 }
 
+void listDir(fs::FS &fs, const char * dirname, uint8_t levels) {
+	Serial.printf("[SD] Listing directory: %s\r\n", dirname);
+
+	File root = fs.open(dirname);
+	if (!root) {
+		Serial.println("[SD] Failed to open directory");
+		return;
+	}
+	if (!root.isDirectory()) {
+		Serial.println("[SD] Not a directory");
+		return;
+	}
+
+	File file = root.openNextFile();
+	while (file) {
+		if (file.isDirectory()) {
+			Serial.print("[SD]   DIR : ");
+			Serial.println(file.name());
+			if (levels) {
+				listDir(fs, file.name(), levels - 1);
+			}
+		}
+		else {
+			Serial.print("[SD]   FILE: ");
+			Serial.print(file.name());
+			Serial.print("[SD]   SIZE: ");
+			Serial.println(file.size());
+		}
+		file = root.openNextFile();
+	}
+}
 
 void setup()
 {
@@ -241,6 +289,37 @@ void setup()
 		display.display();
 		while (true) ; //TODO: sleep
 	}
+	
+	spi.begin(SD_CLK, SD_MISO, SD_MOSI, SD_CS);
+	
+	if (!SD.begin(SD_CS, spi, 40000)) {
+		Serial.println("Card Mount Failed");
+		return;
+	}
+	uint8_t cardType = SD.cardType();
+
+	if (cardType == CARD_NONE) {
+		Serial.println("No SD card attached");
+		return;
+	}
+	Serial.print("SD Card Type: ");
+	if (cardType == CARD_MMC) {
+		Serial.println("MMC");
+	}
+	else if (cardType == CARD_SD) {
+		Serial.println("SDSC");
+	}
+	else if (cardType == CARD_SDHC) {
+		Serial.println("SDHC");
+	}
+	else {
+		Serial.println("UNKNOWN");
+	}
+
+	uint64_t cardSize = SD.cardSize() / (1024 * 1024);
+	Serial.printf("SD Card Size: %lluMB\r\n", cardSize);
+
+	listDir(SD, "/", 0);
 	
 	
 	//Connect to access point
@@ -298,10 +377,10 @@ void setup()
 		HTTP_GET,
 		[](AsyncWebServerRequest* request) {
 			Serial.println("[Server] csv req");
-			if (xSemaphoreTake(mutex, portMAX_DELAY)==pdTRUE)
+			if (xSemaphoreTake(mutex, portMAX_DELAY) == pdTRUE)
 			{
 				Serial.println("[Server] csv mutex obtained");
-				request->send(SPIFFS, "/data.csv", "text/csv"); 
+				request->send(SD, "/data.csv", "text/csv"); 
 				xSemaphoreGive(mutex);
 				Serial.println("[Server] csv sent");
 			}
@@ -346,21 +425,23 @@ void setup()
 			serializeJsonPretty(doc, jobData);
 			
 			SPIFFS.remove("/config.json");
-			SPIFFS.remove("/data.csv");
+			SD.remove("/data.csv");
 			
 			File file = SPIFFS.open("/config.json", FILE_WRITE);
-			File dataFile = SPIFFS.open("/data.csv", FILE_WRITE);
+			File dataFile = SD.open("/data.csv", FILE_WRITE);
 			dataFile.close();
 	
 			if (!file) {
 				Serial.println("[Server] Error opening config file for writing");
-			}else
+			}
+			else
 			{
 				if (!file.print(jobData))
 				{
 					Serial.println("[Server] Could not write config file");
 					file.close();
-				}else
+				}
+				else
 				{
 					file.close();
 					startJob();

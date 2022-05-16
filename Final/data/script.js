@@ -16,7 +16,7 @@ document.addEventListener('readystatechange', event => {
 
 
 function showTable(text){
-    console.log(text);
+    // console.log(text);
     var rows = text.split(/\r?\n/);
     var table = "<table><tr> <th>Date</th> <th>Time</th> <th>Value</th> </tr>";
     for (var i=0; i< rows.length; i++) {
