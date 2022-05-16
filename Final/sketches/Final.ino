@@ -166,8 +166,15 @@ bool startJob()
 		file.close();
 		Serial.println("[StartJob] exiting");
 		return false;
-	}else
+	}
+	else
 	{
+		if (auto_reload_timer != NULL)
+		{
+			Serial.println("[StartJob] deleting previous Timer");
+			xTimerDelete(auto_reload_timer, 0);
+		}
+		
 		Serial.println("[StartJob] creating Timer");
 		auto_reload_timer = xTimerCreate("Auto-reload timer", 60000 / portTICK_PERIOD_MS, pdTRUE, (void*)1, myTimerCallback);
 		if (auto_reload_timer == NULL)
